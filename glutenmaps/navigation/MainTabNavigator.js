@@ -30,7 +30,7 @@ const LinksStack = createStackNavigator({
 });
 
 LinksStack.navigationOptions = {
-  tabBarLabel: 'Lonks',
+  tabBarLabel: 'God is a lie',
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
