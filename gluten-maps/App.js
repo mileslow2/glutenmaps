@@ -2,8 +2,7 @@ import React from "react";
 import { View, Text, SafeAreaView } from "react-native";
 import Map from "./Main/Map";
 import { Location, Permissions } from "expo";
-import s from "./styles";
-function makeParam(param, value) {
+ function makeParam(param, value) {
   return param + "=" + value + "&";
 }
 export default class App extends React.Component {
@@ -16,7 +15,7 @@ export default class App extends React.Component {
   }
 
   setMarkers = data => {
-    this.setState({markers: data});
+    this.setState({markers: data.results});
   }
 
   getPlaces = async loc => {
@@ -63,7 +62,7 @@ export default class App extends React.Component {
     }
     return (
       <SafeAreaView>
-        <Map region={this.state.region} markers={this.state.markers.results}/>
+        <Map region={this.state.region} markers={this.state.markers}/>
       </SafeAreaView>
     );
   }

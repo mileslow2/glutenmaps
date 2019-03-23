@@ -1,17 +1,11 @@
 import React from 'react';
 import { StyleSheet, Text, View, TextInput } from 'react-native';
-import moduleName from 'module'
-export default class App extends React.Component {
-  state = {
-    text: ""
-  }
-  changeText = text => {
-    this.setState({text: text})
-    console.log(this.state.text)
-  }
+
+export default class Floop extends React.Component {
   render() {
     return (
       <View style={styles.container}>
+      <Text>1</Text>
       </View>
     );
   }
