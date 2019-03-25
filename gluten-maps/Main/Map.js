@@ -7,6 +7,8 @@ import { FontAwesome } from "@expo/vector-icons";
 import MarkerBody from "./Marker"
 import Nearby from "./Nearby";
 import SearchBar from './SearchBar'
+import GetImage from "./Fetchers/GetImage";
+
 const Marker = MapView.Marker;
 export default class Map extends Component {
 
@@ -29,7 +31,7 @@ export default class Map extends Component {
           title={marker.name}
         >
         <MarkerBody
-          photo_reference={marker.photos[0].photo_reference}
+          imageURI={GetImage(marker.photos[0].photo_reference)}
         />
         </Marker>
       ));
@@ -61,7 +63,10 @@ export default class Map extends Component {
       </MapView>
       <SearchBar/>
        {this.renderCenterButton()}
-        <Nearby/>
+        <Nearby
+          restaurants = {this.props.markers}
+          loc ={{lat: this.props.region.latitude, lon: this.props.region.longitude}}
+        />
       </View>
     );
   }

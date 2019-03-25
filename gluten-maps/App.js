@@ -2,9 +2,8 @@ import React from "react";
 import { View, Text, SafeAreaView } from "react-native";
 import Map from "./Main/Map";
 import { Location, Permissions } from "expo";
- function makeParam(param, value) {
-  return param + "=" + value + "&";
-}
+import GetPlaces from "./Main/Fetchers/GetPlaces";
+
 export default class App extends React.Component {
   state = {
     region: null,
@@ -14,29 +13,10 @@ export default class App extends React.Component {
     this.getLocation();
   }
 
-  setMarkers = data => {
-    this.setState({markers: data.results});
-  }
-
-  getPlaces = async loc => {
-    var googleMapRequest =
-      "https://maps.googleapis.com/maps/api/place/textsearch/json?";
-    googleMapRequest += makeParam(
-      "key",
-      "AIzaSyCaUWYt5ncgdYaU_zE10HsPxXN1BnSySRQ"
-    );
-    googleMapRequest += makeParam("input", "gluten-free");
-    googleMapRequest += makeParam("location", loc.latitude + "," + loc.longitude);
-    googleMapRequest += makeParam("radius", "100");
-    googleMapRequest = googleMapRequest.substr(0, googleMapRequest.length-1); //removes the & from the end
-    try {
-      await fetch(googleMapRequest)
-      .then((res) => res.json())
-      .then((res) => {this.setMarkers(res)})
-    } catch (error) {
-      console.error(error);
-    }
-  }
+  setMarkers = async loc => {
+    var markers = await GetPlaces(loc);
+    this.setState({ markers: markers.results });
+  };
 
   getLocation = async () => {
     let { status } = await Permissions.askAsync(Permissions.LOCATION);
@@ -49,7 +29,7 @@ export default class App extends React.Component {
         longitudeDelta: 0.0421
       }
     });
-    this.getPlaces(location.coords);
+    this.setMarkers(location.coords);
   };
 
   render() {
@@ -62,7 +42,7 @@ export default class App extends React.Component {
     }
     return (
       <SafeAreaView>
-        <Map region={this.state.region} markers={this.state.markers}/>
+        <Map region={this.state.region} markers={this.state.markers} />
       </SafeAreaView>
     );
   }

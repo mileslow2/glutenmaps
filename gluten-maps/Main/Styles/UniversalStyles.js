@@ -24,5 +24,18 @@ export default (u = StyleSheet.create({
     },
     alignItemsCenter: {
         alignItems: "center"
+    },
+    fullW : {
+        width: 100 + "%"
+    },
+    red: {
+        backgroundColor:"red"
+    },
+    col: {
+        flexDirection: "column"
+    },
+    stars :{ 
+    left: 10,
+    bottom: 8
     }
 }))
