@@ -15,7 +15,7 @@ export default class App extends React.Component {
 
   setMarkers = async loc => {
     var markers = await GetPlaces(loc);
-    this.setState({ markers: markers.results });
+    this.setState({ markers: markers });
   };
 
   getLocation = async () => {

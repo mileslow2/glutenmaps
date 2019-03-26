@@ -4,12 +4,15 @@ import {
   Text,
   TouchableOpacity,
   Animated,
-  PanResponder
+  PanResponder,
+  Dimensions
 } from "react-native";
 import s from "./Styles/NearbyStyles";
 import u from "./Styles/UniversalStyles";
 import NearbyList from "./NearbyList";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+
+const {height} = Dimensions.get('screen');
 
 export default class Nearby extends Component {
   state = {
@@ -27,16 +30,9 @@ export default class Nearby extends Component {
 
   upAnim = new Animated.Value(60);
 
-  reverse = () => {
-    const nearbyHeight = !this.state.nearbyToggled ? 60 : 810;
-    Animated.timing(this.upAnim, {
-      toValue: nearbyHeight,
-      timing: 200
-    }).start();
-  }
-
   renderNearby = () => {
-    const nearbyHeight = this.state.nearbyToggled ? 60 : 810;
+    const adjustedHeight = (height>736) ? Math.round(height*.90) :  Math.round(height*.95);
+    const nearbyHeight = this.state.nearbyToggled ? 60 : adjustedHeight;
     Animated.timing(this.upAnim, {
       toValue: nearbyHeight,
       timing: 400

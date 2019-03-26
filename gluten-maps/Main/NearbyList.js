@@ -3,27 +3,10 @@ import { View, Text, TouchableOpacity, FlatList, Image } from "react-native";
 import s from "./Styles/NearbyStyles";
 import u from "./Styles/UniversalStyles";
 import GetImage from "./Fetchers/GetImage";
-import GetDistance from "./Fetchers/GetDistance";
 import StarRating from "react-native-star-rating";
 
 export default class NearbyList extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      restaurants: this.props.restaurants
-    };
-  }
 
-  async componentWillReceiveProps(props) {
-    rests = props.restaurants;
-    for (var i = 0; i < rests.length; i++) {
-      var dist = await GetDistance(props.loc, rests[i].geometry.location);
-      rests[i].dist = dist.rows[0].elements[0].distance.text;
-    }
-    this.setState({
-      restaurants: rests
-    });
-  }
   keyExtractor = item => item.id;
   renderListItem = ({ item }) => {
     if (item.name.length > 31) {
@@ -72,7 +55,7 @@ export default class NearbyList extends Component {
         ListHeaderComponent = {
           <View style={[u.fullW, u.white, {height: 20}]}/>
         }
-          data={this.state.restaurants}
+          data={this.props.restaurants}
           keyExtractor={this.keyExtractor}
           renderItem={this.renderListItem}
         />
