@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import { View, TouchableOpacity } from "react-native";
 import { MapView, Location } from "expo";
-import s from "./Styles/MapStyles";
-import u from "./Styles/UniversalStyles";
+import s from "../../Styles/MapStyles";
+import u from "../../Styles/UniversalStyles";
 import { FontAwesome } from "@expo/vector-icons";
 import MarkerBody from "./Marker";
-import Nearby from "./Nearby";
-import SearchBar from "./SearchBar";
-import GetImage from "./Fetchers/GetImage";
+import Nearby from "../Nearby/Nearby";
+import SearchBar from "../SearchBar";
+import GetImage from "../../Fetchers/GetImage";
 
 const Marker = MapView.Marker;
 export default class Map extends Component {

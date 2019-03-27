@@ -1,7 +1,7 @@
-import { StyleSheet } from "react-native";
-
+import { StyleSheet, Dimensions } from "react-native";
+const {width} = Dimensions.get("screen");
 export default (s = StyleSheet.create({
-  marker: {
+  notTapped: {
     width: 58,
     height: 58,
     alignItems: "center",
@@ -30,5 +30,21 @@ export default (s = StyleSheet.create({
     borderRightColor: "transparent",
     borderBottomColor: "white",
     transform: [{ rotate: "180deg" }]
+  },
+  tappedOnce: {
+    width: Math.round(width*.7),
+    height: 90,
+    borderRadius: 30
+  },
+  tappedOnceTriangle: {
+    left: Math.round(width*.35 - 20),
+    top: 80
+  },
+  oneTapText: {
+    zIndex: 20,
+    fontSize: 22,
+    color:"#595959",
+    marginTop: 6,
+    marginLeft: 11,
   }
 }));

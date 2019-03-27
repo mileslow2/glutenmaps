@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { View, Text } from "react-native";
 import { Feather } from "@expo/vector-icons";
-import u from "./Styles/UniversalStyles";
-import s from "./Styles/SearchStyles";
+import u from "../Styles/UniversalStyles";
+import s from "../Styles/SearchStyles";
 export default class SearchBar extends Component {
   render() {
     return (

@@ -1,5 +1,5 @@
 import GetDistance from './GetDistance'
-
+import GetDescriptions from "./GetDescription"
 function makeParam(param, value) {
   return param + "=" + value + "&";
 }
@@ -17,6 +17,20 @@ async function addDistance(restaurants, location) {
 
 }
 
+function removeClosed(restaurants) { //removes the restaurants that are closed 
+  var isOpen;
+  for (var i = 0; i < restaurants.length; i++) {
+    isOpen = restaurants[i].opening_hours.open_now;
+    if(!isOpen) {
+      console.log(isOpen)
+      delete restaurants[i]; 
+    }
+  } 
+  return restaurants; 
+}
+
+
+
 export default async function GetPlaces(loc) {
   var returnValue;
   var googleMapRequest =
@@ -33,11 +47,14 @@ export default async function GetPlaces(loc) {
     await fetch(googleMapRequest)
       .then(res => res.json())
       .then(res => {
-        returnValue = addDistance(res.results, loc);
+        returnValue = res.results;
       });
   } catch (error) {
     console.error(error);
   }
+  GetDescriptions(returnValue);
+  // returnValue = removeClosed(returnValue);
+  returnValue = await addDistance(returnValue, loc);
   return returnValue;
 }
 

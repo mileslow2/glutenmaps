@@ -7,8 +7,8 @@ import {
   PanResponder,
   Dimensions
 } from "react-native";
-import s from "./Styles/NearbyStyles";
-import u from "./Styles/UniversalStyles";
+import s from "../../Styles/NearbyStyles";
+import u from "../../Styles/UniversalStyles";
 import NearbyList from "./NearbyList";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
