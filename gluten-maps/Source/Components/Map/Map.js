@@ -8,9 +8,26 @@ import MarkerBody from "./Marker";
 import Nearby from "../Nearby/Nearby";
 import SearchBar from "../SearchBar";
 import GetImage from "../../Fetchers/GetImage";
-
+import { Store } from "../../redux";
 const Marker = MapView.Marker;
+
 export default class Map extends Component {
+  state = {
+    currentMarker: -1,
+    ableMove: true
+  };
+
+  componentWillMount() {
+    Store.subscribe(() => {
+      const storeState = Store.getState();
+      // console.log(storeState.location)
+      this.moveMap(storeState.location);
+      this.setState({
+        currentMarker: storeState.key
+      });
+    });
+  }
+
   renderMarkers = markers => {
     if (markers == undefined) {
       return null; //it gets madd when it's undefined
@@ -27,23 +44,32 @@ export default class Map extends Component {
           }}
           key={marker.key}
         >
-          <MarkerBody 
-          data={marker}
-          imageURI={GetImage(marker.photos[0].photo_reference)} />
+          <MarkerBody
+            focusKey={this.state.currentMarker}
+            markerKey={marker.key}
+            location={{
+              latitude: marker.geometry.location.lat,
+              longitude: marker.geometry.location.lng
+            }}
+            imageURI={GetImage(marker.photos[0].photo_reference)}
+          />
         </Marker>
       ));
     }
   };
 
+  moveMap(loc) {
+    this.map.animateToCoordinate(loc, 500);
+  }
   centerMap = async () => {
     const location = await Location.getCurrentPositionAsync({});
     const locationCoords = {
       latitude: location.coords.latitude,
       longitude: location.coords.longitude
     };
-    this.map.animateToCoordinate(locationCoords, 500);
+    this.moveMap(locationCoords);
   };
-  
+
   renderCenterButton = () => {
     return (
       <TouchableOpacity
@@ -63,6 +89,7 @@ export default class Map extends Component {
   };
 
   render() {
+    
     return (
       <View>
         <MapView
@@ -72,9 +99,14 @@ export default class Map extends Component {
           style={s.container}
           initialRegion={this.props.region}
           showsUserLocation={true}
-          showsMyLocationButton={true}
+          showsMyLocationButton={false}
+          rotateEnabled={false}
+          pitchEnabled={false}
+          showsCompass={false}
+          zoomEnabled={this.state.ableMove}
+          zoomTapEnabled={false}
         >
-          {this.renderMarkers(this.props.markers)}
+          {this.renderMarkers(this.props.markers, this.state.currentMarker)}
         </MapView>
         <SearchBar />
         {this.renderCenterButton()}

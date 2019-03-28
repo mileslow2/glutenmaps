@@ -52,7 +52,7 @@ export default async function GetPlaces(loc) {
   } catch (error) {
     console.error(error);
   }
-  GetDescriptions(returnValue);
+  // GetDescriptions(returnValue);
   // returnValue = removeClosed(returnValue);
   returnValue = await addDistance(returnValue, loc);
   return returnValue;
