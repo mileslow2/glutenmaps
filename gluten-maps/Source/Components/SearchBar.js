@@ -18,9 +18,7 @@ export default class SearchBar extends Component {
         ]}
       >
         <Feather style={s.icon} name={"search"} color={"#a0a0a0"} size={30} />
-        <Text
-        style={s.text}
-        >Search Restaurants</Text>
+        <Text style={s.text}>Search Restaurants</Text>
       </View>
     );
   }
