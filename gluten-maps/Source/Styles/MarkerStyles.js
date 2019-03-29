@@ -1,5 +1,5 @@
 import { StyleSheet, Dimensions } from "react-native";
-const {width} = Dimensions.get("screen");
+const { width } = Dimensions.get("screen");
 export default (s = StyleSheet.create({
   marker: {
     width: 58,
@@ -8,7 +8,7 @@ export default (s = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: "#fff",
     borderRadius: 30,
-    bottom: 32,
+    bottom: 32
   },
   image: {
     width: 50,
@@ -17,7 +17,7 @@ export default (s = StyleSheet.create({
     zIndex: 1
   },
   triangle: {
-    top: 44 ,
+    top: 44,
     position: "absolute",
     width: 0,
     height: 0,
@@ -31,4 +31,7 @@ export default (s = StyleSheet.create({
     borderBottomColor: "white",
     transform: [{ rotate: "180deg" }]
   },
+  container: {
+    padding: 10
+  }
 }));

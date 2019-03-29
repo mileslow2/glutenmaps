@@ -20,7 +20,7 @@ export default class Map extends Component {
   componentWillMount() {
     Store.subscribe(() => {
       const storeState = Store.getState();
-      // console.log(storeState.location)
+      storeState.location.latitude -= 0.004;
       this.moveMap(storeState.location);
       this.setState({
         currentMarker: storeState.key
@@ -59,7 +59,13 @@ export default class Map extends Component {
   };
 
   moveMap(loc) {
-    this.map.animateToCoordinate(loc, 500);
+    const newRegion = {
+      latitude: loc.latitude,
+      longitude: loc.longitude,
+      latitudeDelta: 0.0154,
+      longitudeDelta: 0.0069
+    };
+    this.map.animateToRegion(newRegion, 400);
   }
   centerMap = async () => {
     const location = await Location.getCurrentPositionAsync({});
@@ -89,7 +95,6 @@ export default class Map extends Component {
   };
 
   render() {
-    
     return (
       <View>
         <MapView

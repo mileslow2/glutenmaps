@@ -14,19 +14,19 @@ export default class Main extends React.Component {
   }
 
   setMarkers = async loc => {
-    var markers = await GetPlaces(loc);
+    const markers = await GetPlaces(loc);
     this.setState({ markers: markers });
   };
 
   getLocation = async () => {
-    let { status } = await Permissions.askAsync(Permissions.LOCATION); // do you need status?
-    let location = await Location.getCurrentPositionAsync({});
+    await Permissions.askAsync(Permissions.LOCATION);
+    const location = await Location.getCurrentPositionAsync({});
     this.setState({
       region: {
         latitude: location.coords.latitude,
         longitude: location.coords.longitude,
-        latitudeDelta: 0.0922,
-        longitudeDelta: 0.0421
+        latitudeDelta: 0.0154,
+        longitudeDelta: 0.0069
       }
     });
     this.setMarkers(location.coords);

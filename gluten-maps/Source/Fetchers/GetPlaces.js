@@ -1,5 +1,5 @@
-import GetDistance from './GetDistance'
-import GetDescriptions from "./GetDescription"
+import GetDistance from "./GetDistance";
+import GetDescriptions from "./GetDescription";
 function makeParam(param, value) {
   return param + "=" + value + "&";
 }
@@ -12,24 +12,22 @@ async function addDistance(restaurants, location) {
       console.error(error);
     }
     restaurants[i].dist = dist.rows[0].elements[0].distance.text;
-  } 
+  }
   return restaurants;
-
 }
 
-function removeClosed(restaurants) { //removes the restaurants that are closed 
+function removeClosed(restaurants) {
+  //removes the restaurants that are closed
   var isOpen;
   for (var i = 0; i < restaurants.length; i++) {
     isOpen = restaurants[i].opening_hours.open_now;
-    if(!isOpen) {
-      console.log(isOpen)
-      delete restaurants[i]; 
+    if (!isOpen) {
+      console.log(isOpen);
+      delete restaurants[i];
     }
-  } 
-  return restaurants; 
+  }
+  return restaurants;
 }
-
-
 
 export default async function GetPlaces(loc) {
   var returnValue;
@@ -57,4 +55,3 @@ export default async function GetPlaces(loc) {
   returnValue = await addDistance(returnValue, loc);
   return returnValue;
 }
-
