@@ -8,7 +8,7 @@ import MarkerBody from "./Marker";
 import Nearby from "../Nearby/Nearby";
 import SearchBar from "../SearchBar";
 import GetImage from "../../Fetchers/GetImage";
-import { Store } from "../../redux";
+import { Store } from "../../Redux";
 const Marker = MapView.Marker;
 
 export default class Map extends Component {
@@ -113,7 +113,9 @@ export default class Map extends Component {
         >
           {this.renderMarkers(this.props.markers, this.state.currentMarker)}
         </MapView>
-        <SearchBar />
+        <View>
+          <SearchBar />
+        </View>
         {this.renderCenterButton()}
         <Nearby
           restaurants={this.props.markers}

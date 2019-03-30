@@ -2,7 +2,7 @@ import React from "react";
 import s from "../../Styles/MarkerStyles";
 import u from "../../Styles/UniversalStyles";
 import { View, Animated, Image, TouchableOpacity } from "react-native";
-import { Store } from "../../redux";
+import { Store } from "../../Redux";
 
 export default class MarkerBody extends React.Component {
   markerScale = new Animated.Value(0);

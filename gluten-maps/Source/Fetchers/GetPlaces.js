@@ -13,8 +13,8 @@ async function addDistance(restaurants, location) {
     } catch (error) {
       console.error(error);
     }
-    text = dist.rows[0].elements[0].distance.text;
-    if (text != undefined) {
+    if (dist.rows[0].status == "OK") {
+      text = dist.rows[0].elements[0].distance.text;
       restaurants[i].dist = text;
     }
   }
