@@ -113,9 +113,7 @@ export default class Map extends Component {
         >
           {this.renderMarkers(this.props.markers, this.state.currentMarker)}
         </MapView>
-        <View>
-          <SearchBar />
-        </View>
+        <SearchBar />
         {this.renderCenterButton()}
         <Nearby
           restaurants={this.props.markers}

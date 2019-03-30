@@ -1,15 +1,20 @@
+// This component requires some really weird
+// styling for it to render, I don't know why
+
 import React, { Component } from "react";
 import {
   View,
   TextInput,
   TouchableOpacity,
   Dimensions,
-  Animated
+  Animated,
+  SafeAreaView
 } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import u from "../Styles/UniversalStyles";
 import s from "../Styles/SearchStyles";
 import { debounce } from "debounce";
+import Cover from "./Cover";
 
 const { width } = Dimensions.get("screen");
 const blurWidth = Math.round(width * 0.8);
@@ -58,7 +63,8 @@ export default class SearchBar extends Component {
             u.shadow,
             u.centerV,
             u.centerH,
-            { left: Math.round(width * 0.36) }
+            u.abs,
+            { left: Math.round(width * 0.86) }
           ]}
           onPress={() => {
             this.blur();
@@ -72,47 +78,51 @@ export default class SearchBar extends Component {
   };
 
   render() {
+    const halfW = Math.round(width * 0.5);
     return (
-      <Animated.View
-        style={[
-          s.bar,
-          u.abs,
-          u.white,
-          u.centerH,
-          u.row,
-          u.alignItemsCenter,
-          u.shadow,
-          { width: this.searchWidth }
-        ]}
-      >
-        <TouchableOpacity
-          onPress={() => {
-            this.input.focus();
-          }}
-          activeOpacity={1}
+      <View style={[u.abs, { zIndex: 2, left: halfW }]}>
+        <Animated.View
+          style={[
+            s.bar,
+            u.abs,
+            u.white,
+            u.centerH,
+            u.row,
+            u.alignItemsCenter,
+            u.shadow,
+            { width: this.searchWidth }
+          ]}
         >
-          <Feather
-            style={s.icon}
-            name={"search"}
-            color={this.state.iconColor}
-            size={30}
+          <TouchableOpacity
+            onPress={() => {
+              this.input.focus();
+            }}
+            activeOpacity={1}
+          >
+            <Feather
+              style={s.icon}
+              name={"search"}
+              color={this.state.iconColor}
+              size={30}
+            />
+          </TouchableOpacity>
+          <TextInput
+            ref={input => {
+              this.input = input;
+            }}
+            onFocus={() => {
+              this.focus();
+            }}
+            onChangeText={debounce(text => {
+              this.query(text);
+            }, 300)}
+            placeholder={"Search Restaurants"}
+            style={s.text}
           />
-        </TouchableOpacity>
-        <TextInput
-          ref={input => {
-            this.input = input;
-          }}
-          onFocus={() => {
-            this.focus();
-          }}
-          onChangeText={debounce(text => {
-            this.query(text);
-          }, 300)}
-          placeholder={"Search Restaurants"}
-          style={s.text}
-        />
-        {this.renderClose()}
-      </Animated.View>
+          {this.renderClose()}
+        </Animated.View>
+        <Cover halfW={halfW} icon={this.state.iconColor} />
+      </View>
     );
   }
 }
