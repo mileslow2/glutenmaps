@@ -5,13 +5,18 @@ function makeParam(param, value) {
 }
 
 async function addDistance(restaurants, location) {
+  var dist;
+  var text;
   for (var i = 0; i < restaurants.length; i++) {
     try {
-      var dist = await GetDistance(location, restaurants[i].geometry.location);
+      dist = await GetDistance(location, restaurants[i].geometry.location);
     } catch (error) {
       console.error(error);
     }
-    restaurants[i].dist = dist.rows[0].elements[0].distance.text;
+    text = dist.rows[0].elements[0].distance.text;
+    if (text != undefined) {
+      restaurants[i].dist = text;
+    }
   }
   return restaurants;
 }
