@@ -26,8 +26,9 @@ export default class Map extends Component {
         this.moveMap(store.location);
         this.setState({
           currentMarker: store.key,
-          showSearch: false
+          showSearch: store.key == -1
         });
+        this.forceUpdate();
       } else {
         // if the store isn't updating the marker, it's trying to remove the search bar
         this.setState({
@@ -111,6 +112,7 @@ export default class Map extends Component {
             lat: this.props.region.latitude,
             lon: this.props.region.longitude
           }}
+          currentMarker={this.state.currentMarker}
         />
       </View>
     );
