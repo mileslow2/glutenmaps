@@ -4,11 +4,10 @@ import { MapView, Location } from "expo";
 import s from "../../Styles/MapStyles";
 import u from "../../Styles/UniversalStyles";
 import { FontAwesome } from "@expo/vector-icons";
-import MarkerBody from "./Marker";
-import Nearby from "../Nearby/Nearby";
+import Focus from "../Focus/Focus";
 import SearchBar from "../SearchBar";
-import GetImage from "../../Fetchers/GetImage";
 import { Store } from "../../Redux";
+import RenderMarkers from "./RenderMarkers";
 const Marker = MapView.Marker;
 
 export default class Map extends Component {
@@ -23,7 +22,7 @@ export default class Map extends Component {
       const store = Store.getState();
       if (typeof store == "object") {
         //if store is updating marker
-        store.location.latitude -= 0.004;
+        store.location.latitude -= 0.0057;
         this.moveMap(store.location);
         this.setState({
           currentMarker: store.key,
@@ -45,36 +44,6 @@ export default class Map extends Component {
     });
   };
 
-  renderMarkers = markers => {
-    if (markers == undefined) {
-      return null; //it gets madd when it's undefined
-    } else {
-      for (var i = 0; i < markers.length; i++) {
-        //gives all elements a key, so RN doesn't freak out
-        markers[i].key = i;
-      }
-      return markers.map(marker => (
-        <Marker
-          coordinate={{
-            latitude: marker.geometry.location.lat,
-            longitude: marker.geometry.location.lng
-          }}
-          key={marker.key}
-        >
-          <MarkerBody
-            focusKey={this.state.currentMarker}
-            markerKey={marker.key}
-            location={{
-              latitude: marker.geometry.location.lat,
-              longitude: marker.geometry.location.lng
-            }}
-            imageURI={GetImage(marker.photos[0].photo_reference)}
-          />
-        </Marker>
-      ));
-    }
-  };
-
   moveMap(loc) {
     const newRegion = {
       latitude: loc.latitude,
@@ -84,6 +53,7 @@ export default class Map extends Component {
     };
     this.map.animateToRegion(newRegion, 400);
   }
+
   centerMap = async () => {
     const location = await Location.getCurrentPositionAsync({});
     const locationCoords = {
@@ -128,14 +98,14 @@ export default class Map extends Component {
           zoomEnabled={this.state.ableMove}
           zoomTapEnabled={false}
         >
-          {this.renderMarkers(this.props.markers, this.state.currentMarker)}
+          {RenderMarkers(this.props.markers, this.state.currentMarker)}
         </MapView>
         <SearchBar
           showSearch={this.state.showSearch}
           restaurants={this.props.markers}
         />
         {this.renderCenterButton()}
-        <Nearby
+        <Focus
           restaurants={this.props.markers}
           loc={{
             lat: this.props.region.latitude,
