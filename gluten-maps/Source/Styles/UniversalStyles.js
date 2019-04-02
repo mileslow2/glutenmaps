@@ -36,5 +36,8 @@ export default (u = StyleSheet.create({
   stars: {
     left: 10,
     bottom: 8
+  },
+  z1: {
+    zIndex: 1
   }
 }));

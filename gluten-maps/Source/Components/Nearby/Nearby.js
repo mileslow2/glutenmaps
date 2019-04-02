@@ -11,8 +11,12 @@ import s from "../../Styles/NearbyStyles";
 import u from "../../Styles/UniversalStyles";
 import NearbyList from "./NearbyList";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { Store } from "../../Redux";
 
-const {height} = Dimensions.get('screen');
+const { height } = Dimensions.get("screen");
+
+const adjustedHeight =
+  height > 736 ? Math.round(height * 0.9) : Math.round(height * 0.95);
 
 export default class Nearby extends Component {
   state = {
@@ -21,7 +25,12 @@ export default class Nearby extends Component {
 
   panResponder = PanResponder.create({
     onStartShouldSetPanResponder: () => true,
-    onPanResponderRelease: (event, gesture) => {
+    onPanResponderMove: (event, gesture) => {
+      const nearbyHeight = !this.state.nearbyToggled ? 60 : adjustedHeight;
+      const newValue = nearbyHeight - gesture.dy;
+      this.upAnim.setValue(newValue);
+    },
+    onPanResponderEnd: (event, gesture) => {
       if (Math.abs(gesture.dy) > 20) {
         this.renderNearby();
       }
@@ -31,32 +40,35 @@ export default class Nearby extends Component {
   upAnim = new Animated.Value(60);
 
   renderNearby = () => {
-    const adjustedHeight = (height>736) ? Math.round(height*.90) :  Math.round(height*.95);
     const nearbyHeight = this.state.nearbyToggled ? 60 : adjustedHeight;
-    Animated.timing(this.upAnim, {
+    Animated.spring(this.upAnim, {
       toValue: nearbyHeight,
-      timing: 400
+      timing: 500,
+      friction: 7
     }).start();
     this.setState({
       nearbyToggled: !this.state.nearbyToggled
     });
+    const nearbyToggled = this.state.nearbyToggled;
+    Store.dispatch({ type: "update", payload: nearbyToggled });
   };
 
-  render() {
-    const removeShadow = !this.state.nearbyToggled ? (
-      <View style={[s.removeShadow, u.abs, u.white]} />
-    ) : null;
-    const filter = this.state.nearbyToggled ? (
-      <TouchableOpacity style={[u.shadow, s.filterButton, u.white, u.abs]}>
-        <MaterialCommunityIcons
-          name={"filter-variant"}
-          size={30}
-          color={"#cbcbcb"}
-          style={s.filterButtonIcon}
-        />
-      </TouchableOpacity>
-    ) : null;
+  renderFilter = this.state.nearbyToggled ? (
+    <TouchableOpacity style={[u.shadow, s.filterButton, u.white, u.abs]}>
+      <MaterialCommunityIcons
+        name={"filter-variant"}
+        size={30}
+        color={"#cbcbcb"}
+        style={s.filterButtonIcon}
+      />
+    </TouchableOpacity>
+  ) : null;
 
+  removeShadow = !this.state.nearbyToggled ? (
+    <View style={[s.removeShadow, u.abs, u.white]} />
+  ) : null;
+
+  render() {
     return (
       <View>
         <Animated.View
@@ -71,7 +83,7 @@ export default class Nearby extends Component {
               style={[s.swipeUpper, u.centerH]}
             />
             <Text style={s.text}>Nearby Restaurants</Text>
-            {filter}
+            {this.filter}
           </View>
           <NearbyList
             loc={this.props.loc}
@@ -79,7 +91,7 @@ export default class Nearby extends Component {
             toggled={this.state.toggled}
           />
         </Animated.View>
-        {removeShadow}
+        {this.removeShadow}
       </View>
     );
   }

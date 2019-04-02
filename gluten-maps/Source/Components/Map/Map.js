@@ -14,19 +14,36 @@ const Marker = MapView.Marker;
 export default class Map extends Component {
   state = {
     currentMarker: -1,
-    ableMove: true
+    ableMove: true,
+    showSearch: true
   };
 
   componentWillMount() {
     Store.subscribe(() => {
-      const storeState = Store.getState();
-      storeState.location.latitude -= 0.004;
-      this.moveMap(storeState.location);
-      this.setState({
-        currentMarker: storeState.key
-      });
+      const store = Store.getState();
+      if (typeof store == "object") {
+        //if store is updating marker
+        store.location.latitude -= 0.004;
+        this.moveMap(store.location);
+        this.setState({
+          currentMarker: store.key,
+          showSearch: false
+        });
+      } else {
+        // if the store isn't updating the marker, it's trying to remove the search bar
+        this.setState({
+          showSearch: store
+        });
+      }
     });
   }
+
+  unfocus = () => {
+    this.setState({
+      showSearch: true,
+      currentMarker: -1
+    });
+  };
 
   renderMarkers = markers => {
     if (markers == undefined) {
@@ -113,7 +130,10 @@ export default class Map extends Component {
         >
           {this.renderMarkers(this.props.markers, this.state.currentMarker)}
         </MapView>
-        <SearchBar />
+        <SearchBar
+          showSearch={this.state.showSearch}
+          restaurants={this.props.markers}
+        />
         {this.renderCenterButton()}
         <Nearby
           restaurants={this.props.markers}

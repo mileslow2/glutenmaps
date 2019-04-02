@@ -20,11 +20,22 @@ const { width } = Dimensions.get("screen");
 const blurWidth = Math.round(width * 0.8);
 export default class SearchBar extends Component {
   state = {
-    iconColor: "#a0a0a0"
+    iconColor: "#a0a0a0",
+    items: []
   };
 
   query = text => {
-    console.log(text);
+    // const restaurants = this.props.restaurants;
+    // var newRestaurants = [];
+    // for (var i = 0; i < restaurants.length; i++) {
+    //     restaurants[i] = restaurants[i].name;
+    //     console.log(" ");
+    //     console.log(restaurants[i]);
+    //     console.log(restaurants[i].includes(text));
+    //     // if (restaurants[i].includes(text)) newRestaurants.push(restaurants[i]);
+    //   }
+    // }
+    // console.log(newRestaurants);
   };
 
   searchWidth = new Animated.Value(blurWidth);
@@ -78,6 +89,7 @@ export default class SearchBar extends Component {
   };
 
   render() {
+    if (!this.props.showSearch) return null;
     const halfW = Math.round(width * 0.5);
     return (
       <View style={[u.abs, { zIndex: 2, left: halfW }]}>
@@ -90,22 +102,16 @@ export default class SearchBar extends Component {
             u.row,
             u.alignItemsCenter,
             u.shadow,
+            u.z1,
             { width: this.searchWidth }
           ]}
         >
-          <TouchableOpacity
-            onPress={() => {
-              this.input.focus();
-            }}
-            activeOpacity={1}
-          >
-            <Feather
-              style={s.icon}
-              name={"search"}
-              color={this.state.iconColor}
-              size={30}
-            />
-          </TouchableOpacity>
+          <Feather
+            style={s.icon}
+            name={"search"}
+            color={this.state.iconColor}
+            size={30}
+          />
           <TextInput
             ref={input => {
               this.input = input;
@@ -121,7 +127,7 @@ export default class SearchBar extends Component {
           />
           {this.renderClose()}
         </Animated.View>
-        <Cover halfW={halfW} icon={this.state.iconColor} />
+        <Cover offset={-1 * halfW} icon={this.state.iconColor} />
       </View>
     );
   }

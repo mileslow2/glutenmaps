@@ -5,8 +5,7 @@ const { width, height } = Dimensions.get("screen");
 
 export default class Cover extends Component {
   render() {
-    const opacity = this.props.icon == "#a0a0a0" ? 0 : 0.5;
-    const backgroundColor = "rgba(156, 156, 156, " + opacity + ")";
+    if (this.props.icon == "#a0a0a0") return null;
     return (
       <View
         style={[
@@ -14,8 +13,8 @@ export default class Cover extends Component {
           {
             width: width,
             height: height,
-            left: -1 * this.props.halfW,
-            backgroundColor: backgroundColor
+            left: this.props.offset,
+            backgroundColor: "rgba(156, 156, 156, 0.5)"
           }
         ]}
       />

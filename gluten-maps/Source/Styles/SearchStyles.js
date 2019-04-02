@@ -3,8 +3,7 @@ export default (s = StyleSheet.create({
   bar: {
     height: 54,
     borderRadius: 27,
-    top: 16,
-    zIndex: 1
+    top: 16
   },
   icon: {
     marginLeft: 9
