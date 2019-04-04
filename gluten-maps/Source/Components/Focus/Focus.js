@@ -27,18 +27,17 @@ export default class Focus extends Component {
   constructor() {
     super();
     this.state = {
-      focusToggled: false
+      focusToggled: false,
+      upAnim: new Animated.Value(60)
     };
   }
-
-  upAnim = new Animated.Value(60);
 
   panResponder = PanResponder.create({
     onStartShouldSetPanResponder: () => true,
     onPanResponderMove: (event, gesture) => {
       const focusHeight = !this.state.focusToggled ? 60 : nearbyHeight;
       const newValue = focusHeight - gesture.dy;
-      this.upAnim.setValue(newValue);
+      this.state.upAnim.setValue(newValue);
     },
     onPanResponderEnd: (event, gesture) => {
       if (Math.abs(gesture.dy) > 20) {
@@ -48,7 +47,7 @@ export default class Focus extends Component {
   });
 
   spring = heightTo => {
-    Animated.spring(this.upAnim, {
+    Animated.spring(this.state.upAnim, {
       toValue: heightTo,
       timing: 500,
       friction: 7
@@ -94,8 +93,11 @@ export default class Focus extends Component {
       loc: this.props.loc
     };
     const toggled = this.state.focusToggled;
-    return <Decide data={data} toggled={toggled} />;
-    Decide(data, toggled);
+    return (
+      <View style={{ zIndex: 2 }}>
+        <Decide data={data} toggled={toggled} />
+      </View>
+    );
   };
 
   checkPage = () => {
@@ -118,15 +120,15 @@ export default class Focus extends Component {
     return (
       <View>
         <Animated.View
-          style={[s.focusContainer, u.abs, { height: this.upAnim }]}
+          style={[s.focusContainer, u.abs, { height: this.state.upAnim }]}
         >
           <View
             {...this.panResponder.panHandlers}
             style={[u.fullW, u.white, u.shadow, s.bottomHeaderBody]}
           >
             <View style={[s.swipeUpper, u.centerH]} />
-            {this.removeShadow()}
             {this.packageDecider()}
+            {this.removeShadow()}
           </View>
         </Animated.View>
       </View>

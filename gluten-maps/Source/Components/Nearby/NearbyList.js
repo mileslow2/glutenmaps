@@ -23,6 +23,7 @@ export default class NearbyList extends Component {
         keyExtractor={this.keyExtractor}
         renderItem={this.renderListItem}
         showsVerticalScrollIndicator={false}
+        removeClippedSubviews={true}
       />
     );
   }
