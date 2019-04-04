@@ -39,5 +39,8 @@ export default (u = StyleSheet.create({
   },
   z1: {
     zIndex: 1
+  },
+  textWhite: {
+    color: "white"
   }
 }));

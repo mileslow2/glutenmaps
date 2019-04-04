@@ -1,14 +1,22 @@
 import React, { Component } from "react";
 import { View, TouchableOpacity, Text } from "react-native";
-import {s.info, s.paddingLeft, s.textColor} from "../../Styles/RestaurantStyles";
+import s from "../../Styles/ReviewStyles";
+import u from "../../Styles/UniversalStyles";
 export default class Reviews extends Component {
   render() {
-    return <View >
-      <Text
-        style={[s.largeText, s.paddingLeft, s.textColor, { marginTop: -5 }]}
-      >
-        Reviews
-      </Text>
-    </View>;
+    return (
+      <View style={s.offset}>
+        <View style={[u.row]}>
+          <Text style={s.header}>Reviews</Text>
+          <TouchableOpacity style={[s.button]}>
+            <Text
+              style={[u.abs, u.centerV, u.centerH, u.textWhite, s.buttonText]}
+            >
+              Write a review
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    );
   }
 }
