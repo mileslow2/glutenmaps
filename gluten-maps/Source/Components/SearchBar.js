@@ -42,7 +42,7 @@ export default class SearchBar extends Component {
 
   focus = () => {
     this.changeSearchWidth(width);
-    this.changeSearchIconColor("rgb(171, 215, 195)");
+    this.changeSearchIconColor("rgb(83, 204, 151)");
   };
 
   blur = () => {

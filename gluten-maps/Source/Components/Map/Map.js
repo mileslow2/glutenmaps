@@ -76,7 +76,7 @@ export default class Map extends Component {
           style={[u.centerH, u.centerV, s.icon]}
           name={"location-arrow"}
           size={40}
-          color={"#a8d6c2"}
+          color={"rgb(83, 204, 151)"}
         />
       </TouchableOpacity>
     );

@@ -16,9 +16,9 @@ export default class NearbyListItem extends Component {
         iconSet={"Ionicons"}
         maxStars={5}
         rating={rating}
-        fullStarColor={"rgb(168, 214, 194)"}
-        halfStarColor={"rgb(168, 214, 194)"}
-        emptyStarColor={"rgb(168, 214, 194)"}
+        fullStarColor={"rgb(83, 204, 151)"}
+        halfStarColor={"rgb(83, 204, 151)"}
+        emptyStarColor={"rgb(83, 204, 151)"}
         starSize={27}
       />
     );
