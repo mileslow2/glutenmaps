@@ -2,6 +2,7 @@ import React from "react";
 import { View, Text, SafeAreaView } from "react-native";
 import Map from "./Map";
 import { Location, Permissions } from "expo";
+import GetDistance from "../../Fetchers/GetDistance";
 import GetPlaces from "../../Fetchers/GetPlaces";
 
 export default class Main extends React.Component {
@@ -14,7 +15,8 @@ export default class Main extends React.Component {
   }
 
   setMarkers = async loc => {
-    const markers = await GetPlaces(loc);
+    var markers = await GetPlaces(loc);
+    markers = await GetDistance(loc, markers);
     this.setState({ markers: markers });
   };
 

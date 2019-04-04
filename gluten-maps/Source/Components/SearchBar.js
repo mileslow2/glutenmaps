@@ -29,13 +29,9 @@ export default class SearchBar extends Component {
     // var newRestaurants = [];
     // for (var i = 0; i < restaurants.length; i++) {
     //     restaurants[i] = restaurants[i].name;
-    //     console.log(" ");
-    //     console.log(restaurants[i]);
-    //     console.log(restaurants[i].includes(text));
     //     // if (restaurants[i].includes(text)) newRestaurants.push(restaurants[i]);
     //   }
     // }
-    // console.log(newRestaurants);
   };
 
   searchWidth = new Animated.Value(blurWidth);

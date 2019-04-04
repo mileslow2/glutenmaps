@@ -41,7 +41,7 @@ export default class NearbyListItem extends Component {
             {this.renderStars(item.rating)}
           </View>
         </View>
-        <Text style={[s.distanceText, u.abs]}>{item.dist}</Text>
+        <Text style={[s.distanceText, u.abs]}>{item.duration}</Text>
       </TouchableOpacity>
     );
   }
