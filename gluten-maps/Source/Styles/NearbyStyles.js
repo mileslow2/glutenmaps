@@ -19,12 +19,12 @@ export default (s = StyleSheet.create({
   },
   itemContainer: {
     height: 50,
-    borderBottomRightRadius: 28,
-    borderBottomLeftRadius: 28,
+    borderBottomRightRadius: 25,
+    borderBottomLeftRadius: 25,
     marginBottom: 20
   },
   shadowCover: {
-    top: -10,
+    top: -5,
     height: 10,
     paddingTop: 0
   },

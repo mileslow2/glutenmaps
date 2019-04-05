@@ -8,10 +8,10 @@ function removeunnecessary(data) {
     delete data[i].price_level;
     delete data[i].types;
     delete data[i].icon;
+    delete data[i].user_ratings_total;
     delete data[i].photos[0].html_attributions;
     delete data[i].photos[0].height;
     delete data[i].photos[0].width;
-    delete data[i].reference;
     delete data[i].geometry.viewport;
     delete data[i].geometry.southwest;
   }

@@ -4,6 +4,7 @@ import s from "../../Styles/RestaurantStyles";
 import u from "../../Styles/UniversalStyles";
 import StarRating from "react-native-star-rating";
 import Reviews from "../Review/Reviews";
+import Actions from "./Actions";
 export default class Restaurant extends Component {
   render() {
     return (
@@ -32,6 +33,7 @@ export default class Restaurant extends Component {
           plus a gluten-free menu.
         </Text>
         <Reviews />
+        <Actions data={this.props.data} />
       </View>
     );
   }

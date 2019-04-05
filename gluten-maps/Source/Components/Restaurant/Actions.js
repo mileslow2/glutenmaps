@@ -1,39 +1,79 @@
 import React, { Component } from "react";
-import { View, TouchableOpacity, Flatlist, Text } from "react-native";
+import { View, TouchableOpacity, FlatList, Text } from "react-native";
 import s from "../../Styles/RestaurantStyles";
 import u from "../../Styles/UniversalStyles";
-
+import GetMoreData from "../../Fetchers/GetMoreData";
 export default class Action extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: props.data,
+      list: [{ action: "text", other: "text" }]
+    };
+  }
 
+  async componentWillMount() {
+    moreData = await GetMoreData(this.state.data);
+    list = this.listifyData(moreData);
+    this.setState({
+      list: list
+    });
+  }
 
+  addObj(action, other) {
+    return {
+      action,
+      other
+    };
+  }
+
+  listifyData(data) {
+    var newArr = [];
+    var duration = data.duration;
+    duration = duration.substring(0, duration.length - 1);
+    duration += " drive";
+    newArr.push(this.addObj("Directions", duration));
+    newArr.push(this.addObj("View menu", "Gluten-Free menu"));
+    const openNow = data.opening_hours.open_now ? "Open now" : "Closed now";
+    newArr.push(this.addObj("View hours", openNow));
+    newArr.push(this.addObj("Call", data.formatted_phone_number));
+    newArr.push(this.addObj("Open", "Website"));
+    return newArr;
+  }
 
   keyExtractor = item => item.action;
 
   renderItem = ({ item }) => {
     return (
-
+      <View style={[u.row, s.itemContainer, u.shadow, u.white]}>
+        <View style={[s.shadowCover, u.white, u.fullW, u.abs]} />
+        <Text style={[s.other, s.textColor]}>{item.other}</Text>
+        <TouchableOpacity style={s.action}>
+          <Text
+            style={[s.actionText, u.abs, u.centerH, u.centerV, u.textWhite]}
+          >
+            {item.action}
+          </Text>
+        </TouchableOpacity>
+      </View>
     );
   };
 
+  renderHeader = () => {
+    return <View style={[{ height: 10 }, u.white, u.fullW]} />;
+  };
+
   render() {
-    const data = [
-      {
-        action: "View menu",
-        other: "Gluten-Free menu"
-      },
-      {
-        action: "View hours",
-        other: this.props.data.opening_hours
-      },
-      {
-
-      }
-
-    ]
     return (
-      <View>
-        <Flatlist scrollEnabled={false} />
-      </View>
+      <FlatList
+        ListHeaderComponent={
+          <View style={[{ height: 10 }, u.white, u.fullW]} />
+        }
+        scrollEnabled={false}
+        data={this.state.list}
+        keyExtractor={this.keyExtractor}
+        renderItem={this.renderItem}
+      />
     );
   }
 }
