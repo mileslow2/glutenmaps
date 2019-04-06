@@ -1,14 +1,19 @@
 import React, { Component } from "react";
-import { View, TouchableOpacity, FlatList, Text } from "react-native";
+import { View, TouchableOpacity, FlatList, Text, Linking } from "react-native";
 import s from "../../Styles/RestaurantStyles";
 import u from "../../Styles/UniversalStyles";
 import GetMoreData from "../../Fetchers/GetMoreData";
+import { phonecall } from "react-native-communications";
+import openMap from "react-native-open-maps";
+import Hours from "./Modal";
+
 export default class Action extends Component {
   constructor(props) {
     super(props);
     this.state = {
       data: props.data,
-      list: [{ action: "text", other: "text" }]
+      list: [{ action: "text", other: "text" }],
+      visible: false
     };
   }
 
@@ -20,12 +25,16 @@ export default class Action extends Component {
     });
   }
 
-  addObj(action, other) {
+  addObj(action, other, func) {
     return {
       action,
       other
     };
   }
+
+  openWebsite = website => {
+    Linking.openURL(website);
+  };
 
   listifyData(data) {
     var newArr = [];
@@ -43,12 +52,42 @@ export default class Action extends Component {
 
   keyExtractor = item => item.action;
 
+  decideFunction = action => {
+    data = this.state.data;
+    if (action == "Open") Linking.openURL(data.website);
+    if (action == "Call") {
+      phone = data.formatted_phone_number;
+      phone = phone.replace("-", "");
+      phone = phone.replace("(", "");
+      phone = phone.replace(") ", "");
+      phonecall(phone, false);
+    }
+    if (action == "Directions") {
+      loc = data.geometry.location;
+      openMap({
+        latitude: loc.lat,
+        longitude: loc.lng,
+        query: data.name
+      });
+    }
+    if (action == "View hours") {
+      this.setState({
+        visible: true
+      });
+    }
+  };
+
   renderItem = ({ item }) => {
     return (
       <View style={[u.row, s.itemContainer, u.shadow, u.white]}>
         <View style={[s.shadowCover, u.white, u.fullW, u.abs]} />
         <Text style={[s.other, s.textColor]}>{item.other}</Text>
-        <TouchableOpacity style={s.action}>
+        <TouchableOpacity
+          onPress={() => {
+            this.decideFunction(item.action);
+          }}
+          style={s.action}
+        >
           <Text
             style={[s.actionText, u.abs, u.centerH, u.centerV, u.textWhite]}
           >
@@ -59,21 +98,23 @@ export default class Action extends Component {
     );
   };
 
-  renderHeader = () => {
-    return <View style={[{ height: 10 }, u.white, u.fullW]} />;
-  };
-
   render() {
     return (
-      <FlatList
-        ListHeaderComponent={
-          <View style={[{ height: 10 }, u.white, u.fullW]} />
-        }
-        scrollEnabled={false}
-        data={this.state.list}
-        keyExtractor={this.keyExtractor}
-        renderItem={this.renderItem}
-      />
+      <View>
+        <Hours
+          visible={this.state.visible}
+          data={this.state.data.opening_hours.weekday_text}
+        />
+        <FlatList
+          ListHeaderComponent={
+            <View style={[{ height: 10 }, u.white, u.fullW]} />
+          }
+          scrollEnabled={false}
+          data={this.state.list}
+          keyExtractor={this.keyExtractor}
+          renderItem={this.renderItem}
+        />
+      </View>
     );
   }
 }

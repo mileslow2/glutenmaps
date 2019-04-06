@@ -1,4 +1,5 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Dimensions } from "react-native";
+const { width, height } = Dimensions.get("screen");
 
 export default (s = StyleSheet.create({
   title: {
@@ -57,5 +58,29 @@ export default (s = StyleSheet.create({
     top: -10,
     height: 10,
     paddingTop: 0
+  },
+  screenCover: {
+    backgroundColor: "rgba(156, 156, 156, 0.5)",
+    height,
+    width
+  },
+  hoursContainer: {
+    width: Math.round(width * 0.9),
+    height: Math.round(height * 0.35),
+    borderRadius: Math.round(height * 0.04),
+    left: Math.round(width * 0.05),
+    top: Math.round((height * 0.65) / 2),
+    padding: 32,
+    paddingTop: 30
+  },
+  hoursText: {
+    fontSize: 19,
+    fontWeight: "500",
+    paddingBottom: 6
+  },
+  modalHeader: {
+    fontSize: 19,
+    fontWeight: "500",
+    paddingBottom: 20
   }
 }));

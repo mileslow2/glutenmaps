@@ -35,17 +35,32 @@ export default class Focus extends Component {
   panResponder = PanResponder.create({
     onStartShouldSetPanResponder: () => true,
     onPanResponderMove: (event, gesture) => {
-      const focusHeight = !this.state.focusToggled ? 60 : nearbyHeight;
-      const newValue = focusHeight - gesture.dy;
-      this.state.upAnim.setValue(newValue);
+      // I'm sorry
+      const toggled = this.state.focusToggled;
+      if (!(gesture.dy <= 0 && toggled)) {
+        const focusHeight = !toggled
+          ? 60
+          : !decider()
+          ? restaurantHeight
+          : nearbyHeight;
+        const newValue = focusHeight - gesture.dy;
+        this.state.upAnim.setValue(newValue);
+      }
     },
     onPanResponderEnd: (event, gesture) => {
-      if (Math.abs(gesture.dy) > 20) {
-        this.renderFocus();
+      if (!(gesture.dy <= 0 && this.state.focusToggled)) {
+        if (Math.abs(gesture.dy) > 20) {
+          this.renderFocus();
+        } else {
+          this.returnHeight();
+        }
       }
     }
   });
-
+  returnHeight = () => {
+    const focusHeight = !decider() ? restaurantHeight : nearbyHeight;
+    this.spring(focusHeight);
+  };
   spring = heightTo => {
     Animated.spring(this.state.upAnim, {
       toValue: heightTo,
