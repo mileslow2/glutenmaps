@@ -23,7 +23,7 @@ export default class ReviewListItem extends Component {
               fullStarColor={"rgb(83, 204, 151)"}
               halfStarColor={"rgb(83, 204, 151)"}
               emptyStarColor={"rgb(83, 204, 151)"}
-              starSize={20}
+              starSize={s.star.width}
             />
           </View>
           <View style={{ flex: 1 }} />

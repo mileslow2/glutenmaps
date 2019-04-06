@@ -25,13 +25,14 @@ export default class Restaurant extends Component {
             fullStarColor={"rgb(83, 204, 151)"}
             halfStarColor={"rgb(83, 204, 151)"}
             emptyStarColor={"rgb(83, 204, 151)"}
-            starSize={27}
+            starSize={s.star.height}
           />
         </View>
         <Text style={[s.info, s.paddingLeft, s.textColor]}>
           Branch of a family-friendly chain offering pizzas, salads & wings,
           plus a gluten-free menu.
         </Text>
+        <View style={[s.smallerScreenSpacer, u.fullW]} />
         <Reviews />
         <Actions data={this.props.data} />
       </View>

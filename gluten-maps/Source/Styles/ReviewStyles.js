@@ -1,19 +1,26 @@
 import { StyleSheet, Dimensions } from "react-native";
 const { width, height } = Dimensions.get("screen");
+function r(n) {
+  return Math.round(n);
+}
+// f stands for flexible
+function f(n) {
+  return r(height / 35.84 / n);
+}
 export default (s = StyleSheet.create({
   header: {
-    fontSize: 25,
+    fontSize: f(1),
     fontWeight: "500",
-    paddingLeft: 17,
+    paddingLeft: f(1.47),
     color: "#6b6b6b",
     flex: 6
   },
   button: {
     backgroundColor: "rgb(83, 204, 151)",
-    height: 35,
+    height: f(0.7143),
     flex: 4,
-    borderRadius: 18,
-    marginRight: 35,
+    borderRadius: f(1.39),
+    marginRight: f(0.7143),
     shadowColor: "#878787",
     shadowRadius: 2,
     shadowOpacity: 1,
@@ -21,18 +28,18 @@ export default (s = StyleSheet.create({
     bottom: 3
   },
   buttonText: {
-    fontSize: 19,
+    fontSize: f(1.3157),
     fontWeight: "bold",
-    top: 6
+    top: f(4.1666)
   },
   reviewListContainer: {
-    height: Math.round(height * 0.19),
-    marginTop: 6,
+    height: f(f(1) > 23 ? 0.14705 : 0.12),
+    marginTop: f(4.16),
     zIndex: 3
   },
   reviewListItem: {
-    height: 150,
-    width: Math.round(width * 0.54),
+    height: f(f(1) > 23 ? 0.1667 : 0.13),
+    width: r(width * 0.54),
     borderRadius: 25,
     marginLeft: 17,
     marginTop: 5,
@@ -41,7 +48,7 @@ export default (s = StyleSheet.create({
   },
   tapMore: {
     color: "rgb(83, 204, 151)",
-    fontSize: 16
+    fontSize: f(1.5625)
   },
   name: {
     color: "#424242",
@@ -54,18 +61,21 @@ export default (s = StyleSheet.create({
   },
   review: {
     color: "#6b6b6b",
-    fontSize: 13
+    fontSize: f(f(1) > 23 ? 1.923 : 1.6)
   },
   borderRadius: {
-    height: 40,
-    borderRadius: 20
+    height: f(0.625),
+    borderRadius: f(1.25)
   },
   reviewEnd: {
-    height: 50,
-    borderRadius: 25
+    height: f(0.5),
+    borderRadius: f(1)
   },
   reviewEndHelper: {
-    height: 40,
-    top: 20
+    height: f(0.625),
+    top: f(1.25)
+  },
+  star: {
+    width: f(1.25)
   }
 }));

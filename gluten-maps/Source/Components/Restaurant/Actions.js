@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { View, TouchableOpacity, FlatList, Text, Linking } from "react-native";
-import s from "../../Styles/RestaurantStyles";
+import s from "../../Styles/ActionStyles";
 import u from "../../Styles/UniversalStyles";
 import GetMoreData from "../../Fetchers/GetMoreData";
 import { phonecall } from "react-native-communications";
@@ -38,9 +38,9 @@ export default class Action extends Component {
 
   listifyData(data) {
     var newArr = [];
-    var duration = data.duration;
-    duration = duration.substring(0, duration.length - 1);
-    duration += " drive";
+    // var duration = data.duration;
+    // duration = duration.substring(0, duration.length - 1);
+    var duration = "5 min drive";
     newArr.push(this.addObj("Directions", duration));
     newArr.push(this.addObj("View menu", "Gluten-Free menu"));
     const openNow = data.opening_hours.open_now ? "Open now" : "Closed now";

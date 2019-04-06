@@ -25,7 +25,8 @@ export default class MarkerBody extends React.Component {
 
   blurRestaurant = () => {
     // introduces it as well, don't freak out
-    this.animate(1);
+    val = s.marker.width > 50 ? 1 : 1.2;
+    this.animate(val);
   };
 
   render() {

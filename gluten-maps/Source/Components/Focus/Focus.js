@@ -36,14 +36,14 @@ export default class Focus extends Component {
     onStartShouldSetPanResponder: () => true,
     onPanResponderMove: (event, gesture) => {
       // I'm sorry
-      const toggled = this.state.focusToggled;
+      toggled = this.state.focusToggled;
       if (!(gesture.dy <= 0 && toggled)) {
-        const focusHeight = !toggled
+        focusHeight = !toggled
           ? 60
           : !decider()
           ? restaurantHeight
           : nearbyHeight;
-        const newValue = focusHeight - gesture.dy;
+        newValue = focusHeight - gesture.dy;
         this.state.upAnim.setValue(newValue);
       }
     },
@@ -58,7 +58,7 @@ export default class Focus extends Component {
     }
   });
   returnHeight = () => {
-    const focusHeight = !decider() ? restaurantHeight : nearbyHeight;
+    focusHeight = !decider() ? restaurantHeight : nearbyHeight;
     this.spring(focusHeight);
   };
   spring = heightTo => {
@@ -70,7 +70,7 @@ export default class Focus extends Component {
   };
   renderFocus = () => {
     if (decider()) {
-      const focusHeight = this.state.focusToggled ? 60 : nearbyHeight;
+      focusHeight = this.state.focusToggled ? 60 : nearbyHeight;
       this.spring(focusHeight);
       this.changeToggle();
       Store.dispatch({ type: "update", payload: this.state.focusToggled });
@@ -78,7 +78,7 @@ export default class Focus extends Component {
       this.spring(restaurantHeight);
       this.changeToggle();
     } else {
-      const store = Store.getState();
+      store = Store.getState();
       var payload = {
         location: store.location,
         key: -1
@@ -102,12 +102,12 @@ export default class Focus extends Component {
   };
 
   packageDecider = () => {
-    const data = {
+    data = {
       correctHeight: nearbyHeight,
       restaurants: this.props.restaurants,
       loc: this.props.loc
     };
-    const toggled = this.state.focusToggled;
+    toggled = this.state.focusToggled;
     return (
       <View style={{ zIndex: 2 }}>
         <Decide data={data} toggled={toggled} />
