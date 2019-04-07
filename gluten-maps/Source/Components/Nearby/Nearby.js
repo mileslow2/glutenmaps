@@ -8,7 +8,7 @@ import { Store } from "../../Redux";
 
 export default class Nearby extends Component {
   render() {
-    const renderFilter = this.props.toggled ? (
+    renderFilter = this.props.toggled ? (
       <TouchableOpacity style={[u.shadow, s.filterButton, u.white, u.abs]}>
         <MaterialCommunityIcons
           name={"filter-variant"}

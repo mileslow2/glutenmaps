@@ -7,7 +7,7 @@ import {
   Dimensions,
   FlatList
 } from "react-native";
-import s from "../../Styles/RestaurantStyles";
+import s from "../../Styles/ModalStyles";
 import u from "../../Styles/UniversalStyles";
 export default class Hours extends Component {
   state = {
@@ -32,7 +32,6 @@ export default class Hours extends Component {
     }
     item = item.replace(" A", "A");
     item = item.replace(" P", "P");
-    item = item.replace(" - ", "-");
     return <Text style={[s.hoursText, s.textColor]}>{item}</Text>;
   };
 

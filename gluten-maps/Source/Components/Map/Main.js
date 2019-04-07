@@ -12,17 +12,21 @@ export default class Main extends React.Component {
   async componentWillMount() {
     await Permissions.askAsync(Permissions.LOCATION);
     const location = await Location.getCurrentPositionAsync({});
-    this.setState({
-      region: {
-        latitude: location.coords.latitude,
-        longitude: location.coords.longitude,
-        latitudeDelta: 0.0154,
-        longitudeDelta: 0.0069
-      }
-    });
+    const region = {
+      latitude: location.coords.latitude,
+      longitude: location.coords.longitude,
+      latitudeDelta: 0.0154,
+      longitudeDelta: 0.0069
+    };
+    this.setRegion(region);
     this.setMarkers(location.coords);
   }
 
+  setRegion(region) {
+    this.setState({
+      region
+    });
+  }
   setMarkers = async loc => {
     var markers = await GetPlaces(loc);
     this.setState({ markers: markers });
@@ -32,7 +36,7 @@ export default class Main extends React.Component {
     if (this.state.region == null) {
       return (
         <View>
-          <Text>add stuff if they don't say yes</Text>
+          <Text />
         </View>
       );
     }

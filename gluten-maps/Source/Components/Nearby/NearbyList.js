@@ -24,6 +24,7 @@ export default class NearbyList extends Component {
         renderItem={this.renderListItem}
         showsVerticalScrollIndicator={false}
         removeClippedSubviews={true}
+        initialNumToRender={0}
       />
     );
   }

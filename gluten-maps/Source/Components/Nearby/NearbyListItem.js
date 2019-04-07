@@ -1,10 +1,10 @@
-import React, { Component } from "react";
+import React from "react";
 import { View, Text, Image, TouchableOpacity } from "react-native";
 import StarRating from "react-native-star-rating";
 import GetImage from "../../Fetchers/GetImage";
 import s from "../../Styles/NearbyStyles";
 
-export default class NearbyListItem extends Component {
+export default class NearbyListItem extends React.PureComponent {
   renderStars = rating => {
     return (
       <StarRating

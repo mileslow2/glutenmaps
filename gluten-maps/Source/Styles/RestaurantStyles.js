@@ -6,7 +6,7 @@ function r(n) {
 const largeText = r(height / 35.84);
 export default (s = StyleSheet.create({
   title: {
-    marginTop: r(largeText / 3.125),
+    marginTop: r(largeText / 3.5),
     fontWeight: "bold"
   },
   starContainer: {

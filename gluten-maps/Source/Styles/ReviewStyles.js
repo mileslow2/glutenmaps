@@ -61,7 +61,7 @@ export default (s = StyleSheet.create({
   },
   review: {
     color: "#6b6b6b",
-    fontSize: f(f(1) > 23 ? 1.923 : 1.6)
+    fontSize: f(f(1) > 23 ? 1.923 : 1.7)
   },
   borderRadius: {
     height: f(0.625),

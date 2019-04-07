@@ -28,7 +28,9 @@ export default class Focus extends Component {
     super();
     this.state = {
       focusToggled: false,
-      upAnim: new Animated.Value(60)
+      upAnim: new Animated.Value(60),
+      height: new Animated.Value(height),
+      render: true
     };
   }
 
@@ -47,7 +49,7 @@ export default class Focus extends Component {
         this.state.upAnim.setValue(newValue);
       }
     },
-    onPanResponderEnd: (event, gesture) => {
+    onPanResponderRelease: (event, gesture) => {
       if (!(gesture.dy <= 0 && this.state.focusToggled)) {
         if (Math.abs(gesture.dy) > 20) {
           this.renderFocus();
@@ -64,8 +66,8 @@ export default class Focus extends Component {
   spring = heightTo => {
     Animated.spring(this.state.upAnim, {
       toValue: heightTo,
-      timing: 500,
-      friction: 7
+      friction: 7,
+      useNativeDriver: true
     }).start();
   };
   renderFocus = () => {
@@ -89,18 +91,15 @@ export default class Focus extends Component {
       this.spring(60);
     }
   };
-
   changeToggle = () => {
     this.setState({
       focusToggled: !this.state.focusToggled
     });
   };
-
   removeShadow = () => {
     if (this.state.focusToggled && decider()) return null;
     return <View style={[s.removeShadow, u.abs, u.white, u.z1]} />;
   };
-
   packageDecider = () => {
     data = {
       correctHeight: nearbyHeight,
@@ -110,15 +109,13 @@ export default class Focus extends Component {
     toggled = this.state.focusToggled;
     return (
       <View style={{ zIndex: 2 }}>
-        <Decide data={data} toggled={toggled} />
+        <Decide data={data} toggled={toggled} render={this.state.render} />
       </View>
     );
   };
-
   checkPage = () => {
     return this.props.currentMarker == -1;
   };
-
   componentWillMount() {
     let int = setInterval(() => {
       if (!this.checkPage() && !this.state.focusToggled) {
@@ -126,16 +123,28 @@ export default class Focus extends Component {
       }
     }, 200);
   }
-
   componentWillUnMount() {
     clearInterval(int);
   }
-
   render() {
     return (
       <View>
         <Animated.View
-          style={[s.focusContainer, u.abs, { height: this.state.upAnim }]}
+          style={[
+            s.focusContainer,
+            u.abs,
+            {
+              height,
+              transform: [
+                {
+                  translateY: Animated.subtract(
+                    this.state.height,
+                    this.state.upAnim
+                  )
+                }
+              ]
+            }
+          ]}
         >
           <View
             {...this.panResponder.panHandlers}

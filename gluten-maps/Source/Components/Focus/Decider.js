@@ -16,6 +16,7 @@ export default class Decide extends Component {
       return (
         <View style={{ height: data.correctHeight }}>
           <Nearby
+            render={this.props.render}
             restaurants={data.restaurants}
             loc={data.loc}
             correctHeight={data.correctHeight}
