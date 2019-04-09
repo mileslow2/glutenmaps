@@ -11,8 +11,8 @@ import {
   SafeAreaView
 } from "react-native";
 import { Feather } from "@expo/vector-icons";
-import u from "../Styles/UniversalStyles";
-import s from "../Styles/SearchStyles";
+import u from "../../Styles/UniversalStyles";
+import s from "../../Styles/SearchStyles";
 import { debounce } from "debounce";
 import Cover from "./Cover";
 

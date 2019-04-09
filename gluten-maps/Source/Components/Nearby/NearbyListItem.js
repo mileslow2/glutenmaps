@@ -31,10 +31,10 @@ export default class NearbyListItem extends React.PureComponent {
         style={[u.row, s.itemContainer, u.fullW, u.shadow, u.white]}
       >
         <View style={[s.shadowCover, u.white, u.fullW, u.abs]} />
-        <Image
+        {/*<Image
           source={{ uri: GetImage(item.photos[0].photo_reference) }}
           style={[s.listImage, u.shadow]}
-        />
+        />*/}
         <View style={u.col}>
           <Text style={[s.itemText]}>{item.name}</Text>
           <View style={{ width: 50, left: 12, bottom: 10 }}>

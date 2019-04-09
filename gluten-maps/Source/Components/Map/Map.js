@@ -5,7 +5,7 @@ import s from "../../Styles/MapStyles";
 import u from "../../Styles/UniversalStyles";
 import { FontAwesome } from "@expo/vector-icons";
 import Focus from "../Focus/Focus";
-import SearchBar from "../SearchBar";
+import SearchBar from "../Search/SearchBar";
 import { Store } from "../../Redux";
 import RenderMarkers from "./RenderMarkers";
 const Marker = MapView.Marker;
@@ -13,7 +13,6 @@ const Marker = MapView.Marker;
 export default class Map extends Component {
   state = {
     currentMarker: -1,
-    ableMove: true,
     showSearch: true
   };
 
@@ -96,8 +95,9 @@ export default class Map extends Component {
           rotateEnabled={false}
           pitchEnabled={false}
           showsCompass={false}
-          zoomEnabled={this.state.ableMove}
+          zoomEnabled={false}
           zoomTapEnabled={false}
+          scrollEnabled={false}
         >
           {RenderMarkers(this.props.markers, this.state.currentMarker)}
         </MapView>

@@ -60,11 +60,11 @@ export default class MarkerBody extends React.Component {
             }
           ]}
         >
-          <Image
+          {/*<Image
             onLoad={this.blurRestaurant}
             style={s.image}
             source={{ uri: this.props.imageURI }}
-          />
+          />*/}
           <View style={s.triangle} />
         </Animated.View>
       </TouchableOpacity>

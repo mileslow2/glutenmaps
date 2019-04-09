@@ -3,7 +3,7 @@ export default async function GetMoreData(data) {
   const googleMapRequest =
     "https://maps.googleapis.com/maps/api/place/details/json?placeid=" +
     data.reference +
-    "&fields=opening_hours,website,formatted_phone_number&key=AIzaSyCaUWYt5ncgdYaU_zE10HsPxXN1BnSySRQ";
+    "&fields=opening_hours,website,formatted_phone_number&key=AIzaSyBugHx4mjVMJEzGkpeEc5RNdOYfCBADaGY";
   try {
     await fetch(googleMapRequest)
       .then(res => res.json())

@@ -40,7 +40,7 @@ export default async function GetPlaces(loc) {
   googleMapRequest += makeParam("radius", "100");
   googleMapRequest += makeParam(
     "key",
-    "AIzaSyCaUWYt5ncgdYaU_zE10HsPxXN1BnSySRQ"
+    "AIzaSyBugHx4mjVMJEzGkpeEc5RNdOYfCBADaGY"
   );
   googleMapRequest = googleMapRequest.substr(0, googleMapRequest.length - 1); //removes the & from the end
   try {
