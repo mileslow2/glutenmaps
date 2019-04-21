@@ -21,6 +21,7 @@ export default class Restaurant extends Component {
             halfStar={"ios-star-half"}
             iconSet={"Ionicons"}
             maxStars={5}
+            activeOpacity={0}
             rating={this.props.data.rating}
             fullStarColor={"rgb(83, 204, 151)"}
             halfStarColor={"rgb(83, 204, 151)"}

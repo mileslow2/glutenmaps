@@ -17,17 +17,22 @@ export default class Map extends Component {
   };
 
   componentWillMount() {
+    var newLat;
+    var store;
+    var restFocus;
     Store.subscribe(() => {
-      const store = Store.getState();
+      store = Store.getState();
       if (typeof store == "object") {
         //if store is updating marker
-        store.location.latitude -= 0.0057;
+        restFocus = store.key == -1;
+        newLat = restFocus ? 0.0043 : 0.0057;
+        store.location.latitude -= newLat;
         this.moveMap(store.location);
         this.setState({
           currentMarker: store.key,
-          showSearch: store.key == -1
+          showSearch: restFocus
         });
-        this.forceUpdate();
+        this.forceUpdate(); // makes sure all the markers get updated
       } else {
         // if the store isn't updating the marker, it's trying to remove the search bar
         this.setState({
@@ -97,7 +102,6 @@ export default class Map extends Component {
           showsCompass={false}
           zoomEnabled={false}
           zoomTapEnabled={false}
-          scrollEnabled={false}
         >
           {RenderMarkers(this.props.markers, this.state.currentMarker)}
         </MapView>

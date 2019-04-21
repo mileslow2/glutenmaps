@@ -48,7 +48,8 @@ export default (s = StyleSheet.create({
   },
   tapMore: {
     color: "rgb(83, 204, 151)",
-    fontSize: f(1.5625)
+    fontSize: f(1.5625),
+    bottom: f(1) > 23 ? 0 : 2
   },
   name: {
     color: "#424242",
@@ -61,7 +62,7 @@ export default (s = StyleSheet.create({
   },
   review: {
     color: "#6b6b6b",
-    fontSize: f(f(1) > 23 ? 1.923 : 1.7)
+    fontSize: f(f(1) > 23 ? 1.923 : 1.5)
   },
   borderRadius: {
     height: f(0.625),

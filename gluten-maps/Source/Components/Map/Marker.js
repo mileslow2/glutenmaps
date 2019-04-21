@@ -7,9 +7,17 @@ import { Store } from "../../Redux";
 export default class MarkerBody extends React.Component {
   markerScale = new Animated.Value(0);
 
-  animate = toValue => {
+  markerOffet = new Animated.Value(0);
+
+  animateOffset = toValue => {
+    Animated.timing(this.markerOffet, {
+      toValue
+    }).start();
+  };
+
+  animateMarker = toValue => {
     Animated.spring(this.markerScale, {
-      toValue: toValue,
+      toValue,
       friction: 3
     }).start();
   };
@@ -20,26 +28,26 @@ export default class MarkerBody extends React.Component {
       key: this.props.markerKey
     };
     Store.dispatch({ type: "update", payload: payload });
-    this.animate(1.6);
   };
 
   blurRestaurant = () => {
     // introduces it as well, don't freak out
     val = s.marker.width > 50 ? 1 : 1.2;
-    this.animate(val);
+    this.animateMarker(val);
+    this.animateOffset(0);
   };
 
   render() {
     const currentKey = this.props.markerKey;
     const focusKey = this.props.focusKey;
 
-    var translateY;
     if (currentKey != focusKey) {
       this.blurRestaurant();
-      translateY = 0;
     } else {
-      translateY = -15;
+      this.animateMarker(1.6);
+      this.animateOffset(-16);
     }
+
     return (
       <TouchableOpacity
         onPress={() => {
@@ -55,16 +63,16 @@ export default class MarkerBody extends React.Component {
             {
               transform: [
                 { scale: this.markerScale },
-                { translateY: translateY }
+                { translateY: this.markerOffet }
               ]
             }
           ]}
         >
-          {/*<Image
+          <Image
             onLoad={this.blurRestaurant}
             style={s.image}
             source={{ uri: this.props.imageURI }}
-          />*/}
+          />
           <View style={s.triangle} />
         </Animated.View>
       </TouchableOpacity>

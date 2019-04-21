@@ -10,7 +10,7 @@ import {
 import s from "../../Styles/FocusStyles";
 import u from "../../Styles/UniversalStyles";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { Store } from "../../Redux";
+import { Store, FocusChange } from "../../Redux";
 import { debounce } from "debounce";
 import Decide, { decider } from "./Decider";
 import Nearby from "../Nearby/Nearby";
@@ -122,6 +122,12 @@ export default class Focus extends Component {
         this.renderFocus();
       }
     }, 200);
+    FocusChange.subscribe(() => {
+      if (FocusChange.getState()) {
+        this.renderFocus();
+        FocusChange.dispatch({ type: "update", payload: false });
+      }
+    });
   }
   componentWillUnMount() {
     clearInterval(int);

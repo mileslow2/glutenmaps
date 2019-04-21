@@ -8,55 +8,54 @@ import {
   TouchableOpacity,
   Dimensions,
   Animated,
-  SafeAreaView
+  SafeAreaView,
+  Text
 } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import u from "../../Styles/UniversalStyles";
 import s from "../../Styles/SearchStyles";
 import { debounce } from "debounce";
 import Cover from "./Cover";
+const { height, width } = Dimensions.get("screen");
 
-const { width } = Dimensions.get("screen");
-const blurWidth = Math.round(width * 0.8);
 export default class SearchBar extends Component {
   state = {
     iconColor: "#a0a0a0",
-    items: []
+    items: [],
+    blurred: true,
+    searchWidth: Math.round(width * 0.8)
   };
 
-  query = text => {
-    // const restaurants = this.props.restaurants;
-    // var newRestaurants = [];
-    // for (var i = 0; i < restaurants.length; i++) {
-    //     restaurants[i] = restaurants[i].name;
-    //     // if (restaurants[i].includes(text)) newRestaurants.push(restaurants[i]);
-    //   }
-    // }
-  };
+  searchTop = new Animated.Value(16);
 
-  searchWidth = new Animated.Value(blurWidth);
-
-  focus = () => {
-    this.changeSearchWidth(width);
-    this.changeSearchIconColor("rgb(83, 204, 151)");
-  };
-
-  blur = () => {
-    this.input.blur();
-    this.changeSearchWidth(blurWidth);
-    this.changeSearchIconColor("#a0a0a0");
-  };
-
-  changeSearchWidth = toValue => {
-    Animated.timing(this.searchWidth, {
-      toValue: toValue,
-      duration: 400
+  changeSearchTop = toValue => {
+    Animated.timing(this.searchTop, {
+      toValue,
+      duration: 400,
+      useNativeDriver: true
     }).start();
   };
 
-  changeSearchIconColor = color => {
+  focus = () => {
+    this.changeSearchIconColor("rgb(83, 204, 151)");
     this.setState({
-      iconColor: color
+      blurred: false,
+      searchWidth: width
+    });
+  };
+
+  blur = () => {
+    this.setState({
+      blurred: true,
+      searchWidth: Math.round(width * 0.8)
+    });
+    this.changeSearchIconColor("#a0a0a0");
+    this.input.blur();
+  };
+
+  changeSearchIconColor = iconColor => {
+    this.setState({
+      iconColor
     });
   };
 
@@ -71,7 +70,9 @@ export default class SearchBar extends Component {
             u.centerV,
             u.centerH,
             u.abs,
-            { left: Math.round(width * 0.86) }
+            {
+              left: Math.round(width * 0.86)
+            }
           ]}
           onPress={() => {
             this.blur();
@@ -84,8 +85,15 @@ export default class SearchBar extends Component {
     return null;
   };
 
+  componentWillReceiveProps(props) {
+    if (!props.showSearch) {
+      this.changeSearchTop(-70);
+    } else {
+      this.changeSearchTop(16);
+    }
+  }
+
   render() {
-    if (!this.props.showSearch) return null;
     const halfW = Math.round(width * 0.5);
     return (
       <View style={[u.abs, { zIndex: 2, left: halfW }]}>
@@ -99,7 +107,10 @@ export default class SearchBar extends Component {
             u.alignItemsCenter,
             u.shadow,
             u.z1,
-            { width: this.searchWidth }
+            {
+              width: this.state.searchWidth,
+              transform: [{ translateY: this.searchTop }]
+            }
           ]}
         >
           <Feather
@@ -108,6 +119,7 @@ export default class SearchBar extends Component {
             color={this.state.iconColor}
             size={30}
           />
+
           <TextInput
             ref={input => {
               this.input = input;
@@ -121,8 +133,10 @@ export default class SearchBar extends Component {
             placeholder={"Search Restaurants"}
             style={s.text}
           />
+
           {this.renderClose()}
         </Animated.View>
+
         <Cover offset={-1 * halfW} icon={this.state.iconColor} />
       </View>
     );

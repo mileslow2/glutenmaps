@@ -11,3 +11,5 @@ const reducer = function(state, action) {
 };
 
 export const Store = createStore(reducer, initialState);
+
+export const FocusChange = createStore(reducer, false);

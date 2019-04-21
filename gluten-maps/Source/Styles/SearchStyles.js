@@ -2,8 +2,7 @@ import { StyleSheet } from "react-native";
 export default (s = StyleSheet.create({
   bar: {
     height: 54,
-    borderRadius: 27,
-    top: 16
+    borderRadius: 27
   },
   icon: {
     marginLeft: 9

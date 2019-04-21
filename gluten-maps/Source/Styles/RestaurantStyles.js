@@ -18,7 +18,7 @@ export default (s = StyleSheet.create({
   },
   info: {
     fontSize: r(largeText / 1.25),
-    marginTop: r(largeText / 1.19)
+    marginTop: r(largeText / 0.9)
   },
   textColor: {
     color: "#6b6b6b"
