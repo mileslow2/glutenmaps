@@ -68,7 +68,7 @@ export default class Map extends Component {
     this.moveMap(locationCoords);
   };
 
-  renderCenterButton = () => {
+  renderButton = action => {
     return (
       <TouchableOpacity
         onPress={() => {
@@ -100,7 +100,6 @@ export default class Map extends Component {
           rotateEnabled={false}
           pitchEnabled={false}
           showsCompass={false}
-          zoomEnabled={false}
           zoomTapEnabled={false}
         >
           {RenderMarkers(this.props.markers, this.state.currentMarker)}
@@ -109,7 +108,7 @@ export default class Map extends Component {
           showSearch={this.state.showSearch}
           restaurants={this.props.markers}
         />
-        {this.renderCenterButton()}
+        {this.renderButton("center")}
         <Focus
           restaurants={this.props.markers}
           loc={{

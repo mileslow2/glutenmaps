@@ -24,11 +24,11 @@ export default class Hours extends Component {
   renderItem = ({ item }) => {
     sub = item.substring(0, 1);
     if (sub == "W") {
-      item = item.replace(": ", ":\t\t");
+      item = item.replace(": ", ":\t");
     } else if (sub == "F") {
-      item = item.replace(": ", ":    \t\t\t");
+      item = item.replace(": ", ": \t\t\t");
     } else {
-      item = item.replace(": ", ":    \t\t");
+      item = item.replace(": ", ":  \t\t");
     }
     item = item.replace(" A", "A");
     item = item.replace(" P", "P");

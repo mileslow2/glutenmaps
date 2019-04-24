@@ -18,16 +18,8 @@ const reviews = [
   }
 ];
 export default class Reviews extends Component {
-  state = { modalVisible: false };
-
-  openModal = () => {
-    this.setState({
-      modalVisible: true
-    });
-  };
-
   renderButton = (
-    <TouchableOpacity onPress={this.openModal()} style={[s.button]}>
+    <TouchableOpacity style={[s.button]}>
       <Text style={[u.abs, u.centerV, u.centerH, u.textWhite, s.buttonText]}>
         Write a review
       </Text>

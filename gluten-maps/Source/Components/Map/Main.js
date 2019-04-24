@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, SafeAreaView } from "react-native";
 import Map from "./Map";
-import { Location, Permissions } from "expo";
+import { Location, Permissions, Constants } from "expo";
 import GetPlaces from "../../Fetchers/GetPlaces";
 
 export default class Main extends React.Component {
@@ -12,6 +12,7 @@ export default class Main extends React.Component {
   async componentWillMount() {
     await Permissions.askAsync(Permissions.LOCATION);
     const location = await Location.getCurrentPositionAsync({});
+    console.log(location);
     const region = {
       latitude: location.coords.latitude,
       longitude: location.coords.longitude,
@@ -35,7 +36,7 @@ export default class Main extends React.Component {
   render() {
     if (this.state.region == null) {
       return (
-        <View>
+        <View style={{ backgroundColor: "red", flex: 1 }}>
           <Text />
         </View>
       );

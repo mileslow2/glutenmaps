@@ -28,11 +28,13 @@ export default class Focus extends Component {
     super();
     this.state = {
       focusToggled: false,
-      upAnim: new Animated.Value(60),
-      height: new Animated.Value(height),
+
       render: true
     };
   }
+
+  upAnim = new Animated.Value(60);
+  height = new Animated.Value(height);
 
   panResponder = PanResponder.create({
     onStartShouldSetPanResponder: () => true,
@@ -46,7 +48,7 @@ export default class Focus extends Component {
           ? restaurantHeight
           : nearbyHeight;
         newValue = focusHeight - gesture.dy;
-        this.state.upAnim.setValue(newValue);
+        this.upAnim.setValue(newValue);
       }
     },
     onPanResponderRelease: (event, gesture) => {
@@ -64,7 +66,7 @@ export default class Focus extends Component {
     this.spring(focusHeight);
   };
   spring = heightTo => {
-    Animated.spring(this.state.upAnim, {
+    Animated.spring(this.upAnim, {
       toValue: heightTo,
       friction: 7,
       useNativeDriver: true
@@ -143,10 +145,7 @@ export default class Focus extends Component {
               height,
               transform: [
                 {
-                  translateY: Animated.subtract(
-                    this.state.height,
-                    this.state.upAnim
-                  )
+                  translateY: Animated.subtract(this.height, this.upAnim)
                 }
               ]
             }

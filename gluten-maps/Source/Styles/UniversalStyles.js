@@ -4,7 +4,8 @@ export default (u = StyleSheet.create({
     shadowColor: "#9c9191",
     shadowRadius: 3,
     shadowOpacity: 1,
-    shadowOffset: { height: 1 }
+    shadowOffset: { height: 1 },
+    elevation: 5
   },
   abs: {
     position: "absolute"

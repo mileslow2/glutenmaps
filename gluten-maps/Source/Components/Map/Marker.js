@@ -11,14 +11,16 @@ export default class MarkerBody extends React.Component {
 
   animateOffset = toValue => {
     Animated.timing(this.markerOffet, {
-      toValue
+      toValue,
+      useNativeDriver: true
     }).start();
   };
 
   animateMarker = toValue => {
     Animated.spring(this.markerScale, {
       toValue,
-      friction: 3
+      friction: 3,
+      useNativeDriver: true
     }).start();
   };
 
