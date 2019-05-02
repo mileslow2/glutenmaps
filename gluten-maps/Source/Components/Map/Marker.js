@@ -12,7 +12,8 @@ export default class MarkerBody extends React.Component {
   animateOffset = toValue => {
     Animated.timing(this.markerOffet, {
       toValue,
-      useNativeDriver: true
+      useNativeDriver: true,
+      timing: 400
     }).start();
   };
 
@@ -29,7 +30,7 @@ export default class MarkerBody extends React.Component {
       location: this.props.location,
       key: this.props.markerKey
     };
-    Store.dispatch({ type: "update", payload: payload });
+    Store.dispatch({ type: "update", payload });
   };
 
   blurRestaurant = () => {
@@ -42,19 +43,15 @@ export default class MarkerBody extends React.Component {
   render() {
     const currentKey = this.props.markerKey;
     const focusKey = this.props.focusKey;
-
-    if (currentKey != focusKey) {
-      this.blurRestaurant();
-    } else {
+    if (currentKey != focusKey) this.blurRestaurant();
+    else {
       this.animateMarker(1.6);
       this.animateOffset(-16);
     }
 
     return (
       <TouchableOpacity
-        onPress={() => {
-          this.focusRestaurant();
-        }}
+        onPress={this.focusRestaurant}
         activeOpacity={1}
         style={s.container}
       >

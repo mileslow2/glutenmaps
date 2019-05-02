@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, Image, TouchableOpacity } from "react-native";
-import StarRating from "react-native-star-rating";
+import RenderRating from "../Universal/StarRating";
 import GetImage from "../../Fetchers/GetImage";
 import s from "../../Styles/NearbyStyles";
 import { Store, FocusChange } from "../../Redux";
@@ -32,21 +32,7 @@ export default class NearbyListItem extends React.PureComponent {
         <View style={u.col}>
           <Text style={[s.itemText]}>{item.name}</Text>
           <View style={{ width: 50, left: 12, bottom: 10 }}>
-            <StarRating
-              style={s.stars}
-              disabled={false}
-              emptyStar={"ios-star-outline"}
-              fullStar={"ios-star"}
-              halfStar={"ios-star-half"}
-              iconSet={"Ionicons"}
-              maxStars={5}
-              activeOpacity={0}
-              rating={item.rating}
-              fullStarColor={"rgb(83, 204, 151)"}
-              halfStarColor={"rgb(83, 204, 151)"}
-              emptyStarColor={"rgb(83, 204, 151)"}
-              starSize={27}
-            />
+            {RenderRating(item.rating, 27)}
           </View>
         </View>
       </TouchableOpacity>

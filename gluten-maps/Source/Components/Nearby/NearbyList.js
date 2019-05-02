@@ -5,11 +5,7 @@ import NearbyListItem from "./NearbyListItem";
 export default class NearbyList extends Component {
   keyExtractor = item => item.id;
   renderListItem = ({ item }) => {
-    if (item.name.length > 31) {
-      //
-      // adds ... if title is too long
-      item.name = item.name.substring(0, 31) + " ...";
-    }
+    if (item.name.length > 31) item.name = item.name.substring(0, 31) + " ..."; // adds ... if title is too long
     return <NearbyListItem item={item} />;
   };
 

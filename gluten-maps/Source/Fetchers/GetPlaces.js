@@ -17,19 +17,6 @@ function removeunnecessary(data) {
   }
   return data;
 }
-
-// function removeClosed(restaurants) {
-//   //removes the restaurants that are closed
-//   var isOpen;
-//   for (var i = 0; i < restaurants.length; i++) {
-//     isOpen = restaurants[i].opening_hours.open_now;
-//     if (!isOpen) {
-//       delete restaurants[i];
-//     }
-//   }
-//   return restaurants;
-// }
-
 export default async function GetPlaces(loc) {
   var returnValue;
   var googleMapRequest =
@@ -52,6 +39,5 @@ export default async function GetPlaces(loc) {
   } catch (error) {
     console.error(error);
   }
-  returnValue = removeunnecessary(returnValue);
-  return returnValue;
+  return removeunnecessary(returnValue);
 }

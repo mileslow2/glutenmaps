@@ -1,10 +1,8 @@
 import { StyleSheet, Dimensions } from "react-native";
 const { width, height } = Dimensions.get("screen");
-function r(n) {
-  return Math.round(n);
-}
+import R from "../Components/Universal/Round";
 function f(n) {
-  return r(height / 35.84 / n);
+  return R(height / 35.84 / n);
 }
 
 export default (s = StyleSheet.create({
@@ -17,11 +15,11 @@ export default (s = StyleSheet.create({
     width
   },
   hoursContainer: {
-    width: r(width * 0.9),
-    height: f(1) > 23 ? r(height * 0.35) : r(height * 0.38),
-    borderRadius: r(height * 0.04),
-    left: r(width * 0.05),
-    top: r((height * 0.65) / 2),
+    width: R(width * 0.9),
+    height: R(f(1) > 23 ? height * 0.35 : height * 0.38),
+    borderRadius: R(height * 0.04),
+    left: R(width * 0.05),
+    top: R((height * 0.65) / 2),
     padding: f(0.7813),
     paddingTop: f(0.8333)
   },

@@ -1,11 +1,9 @@
 import { StyleSheet, Dimensions } from "react-native";
 const { width, height } = Dimensions.get("screen");
-function r(n) {
-  return Math.round(n);
-}
+import R from "../Components/Universal/Round";
 // f stands for flexible
 function f(n) {
-  return r(height / 35.84 / n);
+  return R(height / 35.84 / n);
 }
 export default (s = StyleSheet.create({
   header: {
@@ -39,7 +37,7 @@ export default (s = StyleSheet.create({
   },
   reviewListItem: {
     height: f(f(1) > 23 ? 0.1667 : 0.13),
-    width: r(width * 0.54),
+    width: R(width * 0.54),
     borderRadius: 25,
     marginLeft: 17,
     marginTop: 5,

@@ -12,26 +12,20 @@ import u from "../../Styles/UniversalStyles";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Store, FocusChange } from "../../Redux";
 import { debounce } from "debounce";
-import Decide, { decider } from "./Decider";
+import Decide, { nearbyAllowed } from "./Decider";
 import Nearby from "../Nearby/Nearby";
-
+import R from "../Universal/Round";
 const { height } = Dimensions.get("screen");
+const nearbyHeight = R(height > 736 ? height * 0.9 : height * 0.95);
+const restaurantHeight = R(height > 736 ? height * 0.79 : height * 0.84);
 
-const nearbyHeight =
-  height > 736 ? Math.round(height * 0.9) : Math.round(height * 0.95);
-
-const restaurantHeight =
-  height > 736 ? Math.round(height * 0.79) : Math.round(height * 0.84);
+var finishHeight, focusHeight, toggled;
 
 export default class Focus extends Component {
-  constructor() {
-    super();
-    this.state = {
-      focusToggled: false,
-
-      render: true
-    };
-  }
+  state = {
+    focusToggled: false,
+    render: true
+  };
 
   upAnim = new Animated.Value(60);
   height = new Animated.Value(height);
@@ -39,41 +33,33 @@ export default class Focus extends Component {
   panResponder = PanResponder.create({
     onStartShouldSetPanResponder: () => true,
     onPanResponderMove: (event, gesture) => {
-      // I'm sorry
       toggled = this.state.focusToggled;
-      if (!(gesture.dy <= 0 && toggled)) {
-        focusHeight = !toggled
-          ? 60
-          : !decider()
-          ? restaurantHeight
-          : nearbyHeight;
+      if (gesture.dy > 0 && !toggled) {
+        finishHeight = nearbyAllowed() ? nearbyHeight : restaurantHeight;
+        focusHeight = toggled ? finishHeight : 60;
         newValue = focusHeight - gesture.dy;
         this.upAnim.setValue(newValue);
       }
     },
     onPanResponderRelease: (event, gesture) => {
-      if (!(gesture.dy <= 0 && this.state.focusToggled)) {
-        if (Math.abs(gesture.dy) > 20) {
-          this.renderFocus();
-        } else {
-          this.returnHeight();
-        }
-      }
+      if (gesture.dy > 0 || !this.state.focusToggled)
+        if (Math.abs(gesture.dy) > 20) this.renderFocus();
+        else this.returnHeight();
     }
   });
-  returnHeight = () => {
-    focusHeight = !decider() ? restaurantHeight : nearbyHeight;
+  returnHeight() {
+    focusHeight = nearbyAllowed() ? nearbyHeight : restaurantHeight;
     this.spring(focusHeight);
-  };
-  spring = heightTo => {
+  }
+  spring(heightTo) {
     Animated.spring(this.upAnim, {
       toValue: heightTo,
       friction: 7,
       useNativeDriver: true
     }).start();
-  };
-  renderFocus = () => {
-    if (decider()) {
+  }
+  renderFocus() {
+    if (nearbyAllowed()) {
       focusHeight = this.state.focusToggled ? 60 : nearbyHeight;
       this.spring(focusHeight);
       this.changeToggle();
@@ -82,42 +68,46 @@ export default class Focus extends Component {
       this.spring(restaurantHeight);
       this.changeToggle();
     } else {
-      store = Store.getState();
+      var store = Store.getState();
+      var newLocation = store.location;
       var payload = {
         location: store.location,
         key: -1
       };
-      payload.location.latitude += 0.0057;
-      Store.dispatch({ type: "update", payload: payload });
+      Store.dispatch({ type: "update", payload });
       this.changeToggle();
       this.spring(60);
     }
-  };
-  changeToggle = () => {
+  }
+  changeToggle() {
     this.setState({
       focusToggled: !this.state.focusToggled
     });
-  };
-  removeShadow = () => {
-    if (this.state.focusToggled && decider()) return null;
+  }
+  removeShadow() {
+    if (this.state.focusToggled && nearbyAllowed()) return null;
     return <View style={[s.removeShadow, u.abs, u.white, u.z1]} />;
-  };
-  packageDecider = () => {
-    data = {
+  }
+  pagenearbyAllowed() {
+    const data = {
       correctHeight: nearbyHeight,
       restaurants: this.props.restaurants,
       loc: this.props.loc
     };
-    toggled = this.state.focusToggled;
+    const toggled = this.state.focusToggled;
     return (
       <View style={{ zIndex: 2 }}>
-        <Decide data={data} toggled={toggled} render={this.state.render} />
+        <Decide
+          data={data}
+          toggled={this.state.focusToggle}
+          render={this.state.render}
+        />
       </View>
     );
-  };
-  checkPage = () => {
+  }
+  checkPage() {
     return this.props.currentMarker == -1;
-  };
+  }
   componentWillMount() {
     let int = setInterval(() => {
       if (!this.checkPage() && !this.state.focusToggled) {
@@ -156,7 +146,7 @@ export default class Focus extends Component {
             style={[u.fullW, u.white, u.shadow, s.bottomHeaderBody]}
           >
             <View style={[s.swipeUpper, u.centerH]} />
-            {this.packageDecider()}
+            {this.pagenearbyAllowed()}
             {this.removeShadow()}
           </View>
         </Animated.View>

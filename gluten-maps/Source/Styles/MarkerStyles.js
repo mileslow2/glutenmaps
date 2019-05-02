@@ -1,9 +1,7 @@
 import { StyleSheet, Dimensions } from "react-native";
-function r(num) {
-  return Math.round(num);
-}
+import R from "../Components/Universal/Round";
 const { height } = Dimensions.get("screen");
-const markerSize = r(height / 15.44);
+const markerSize = R(height / 15.44);
 export default (s = StyleSheet.create({
   marker: {
     width: markerSize,
@@ -11,31 +9,31 @@ export default (s = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "#fff",
-    borderRadius: r(markerSize / 2),
-    bottom: r(markerSize / 2)
+    borderRadius: R(markerSize / 2),
+    bottom: R(markerSize / 2)
   },
   image: {
-    width: r(markerSize / 1.16),
-    height: r(markerSize / 1.16),
-    borderRadius: r(markerSize / 2.32),
+    width: R(markerSize / 1.16),
+    height: R(markerSize / 1.16),
+    borderRadius: R(markerSize / 2.32),
     zIndex: 1
   },
   triangle: {
-    top: r(markerSize / 1.32),
+    top: R(markerSize / 1.32),
     position: "absolute",
     width: 0,
     height: 0,
     backgroundColor: "transparent",
     borderStyle: "solid",
-    borderLeftWidth: r(markerSize / 2.42),
-    borderRightWidth: r(markerSize / 2.42),
-    borderBottomWidth: r(markerSize / 2.9),
+    borderLeftWidth: R(markerSize / 2.42),
+    borderRightWidth: R(markerSize / 2.42),
+    borderBottomWidth: R(markerSize / 2.9),
     borderLeftColor: "transparent",
     borderRightColor: "transparent",
     borderBottomColor: "white",
     transform: [{ rotate: "180deg" }]
   },
   container: {
-    padding: r(markerSize / 1.45)
+    padding: R(markerSize / 1.45)
   }
 }));

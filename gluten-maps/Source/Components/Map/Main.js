@@ -12,25 +12,21 @@ export default class Main extends React.Component {
   async componentWillMount() {
     await Permissions.askAsync(Permissions.LOCATION);
     const location = await Location.getCurrentPositionAsync({});
-    console.log(location);
-    const region = {
-      latitude: location.coords.latitude,
-      longitude: location.coords.longitude,
-      latitudeDelta: 0.0154,
-      longitudeDelta: 0.0069
-    };
-    this.setRegion(region);
+    this.setRegion(location.coords);
     this.setMarkers(location.coords);
   }
 
   setRegion(region) {
+    region.latitudeDelta = 0.0154;
+    region.longitudeDelta = 0.0069;
     this.setState({
       region
     });
   }
   setMarkers = async loc => {
     var markers = await GetPlaces(loc);
-    this.setState({ markers: markers });
+    for (var i = 0; i < markers.length; i++) markers[i].key = i; // they need keys
+    this.setState({ markers });
   };
 
   render() {

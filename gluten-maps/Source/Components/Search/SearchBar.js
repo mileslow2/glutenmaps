@@ -17,13 +17,13 @@ import s from "../../Styles/SearchStyles";
 import { debounce } from "debounce";
 import Cover from "./Cover";
 const { height, width } = Dimensions.get("screen");
-
+import R from "../Universal/Round";
 export default class SearchBar extends Component {
   state = {
     iconColor: "#a0a0a0",
     items: [],
     blurred: true,
-    searchWidth: Math.round(width * 0.8)
+    searchWidth: R(width * 0.8)
   };
 
   searchTop = new Animated.Value(16);
@@ -47,7 +47,7 @@ export default class SearchBar extends Component {
   blur = () => {
     this.setState({
       blurred: true,
-      searchWidth: Math.round(width * 0.8)
+      searchWidth: R(width * 0.8)
     });
     this.changeSearchIconColor("#a0a0a0");
     this.input.blur();
@@ -71,7 +71,7 @@ export default class SearchBar extends Component {
             u.centerH,
             u.abs,
             {
-              left: Math.round(width * 0.86)
+              left: R(width * 0.86)
             }
           ]}
           onPress={() => {
@@ -94,7 +94,7 @@ export default class SearchBar extends Component {
   }
 
   render() {
-    const halfW = Math.round(width * 0.5);
+    const halfW = R(width * 0.5);
     return (
       <View style={[u.abs, { zIndex: 2, left: halfW }]}>
         <Animated.View

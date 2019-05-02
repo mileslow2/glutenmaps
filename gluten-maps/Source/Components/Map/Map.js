@@ -8,6 +8,7 @@ import Focus from "../Focus/Focus";
 import SearchBar from "../Search/SearchBar";
 import { Store } from "../../Redux";
 import RenderMarkers from "./RenderMarkers";
+import cloneDeep from "clone-deep";
 const Marker = MapView.Marker;
 
 export default class Map extends Component {
@@ -17,29 +18,33 @@ export default class Map extends Component {
   };
 
   componentWillMount() {
-    var newLat;
     var store;
-    var restFocus;
     Store.subscribe(() => {
-      store = Store.getState();
-      if (typeof store == "object") {
-        //if store is updating marker
-        restFocus = store.key == -1;
-        newLat = restFocus ? 0.0043 : 0.0057;
-        store.location.latitude -= newLat;
-        this.moveMap(store.location);
-        this.setState({
-          currentMarker: store.key,
-          showSearch: restFocus
-        });
-        this.forceUpdate(); // makes sure all the markers get updated
-      } else {
-        // if the store isn't updating the marker, it's trying to remove the search bar
-        this.setState({
-          showSearch: store
-        });
-      }
+      store = cloneDeep(Store.getState());
+      this.operateMap(store);
     });
+  }
+
+  operateMap(store) {
+    if (typeof store == "object") {
+      //if store is updating marker
+      const restFocus = store.key == -1;
+      const newLat = restFocus ? 0.0043 : 0.0057;
+      var newLoc = store.location;
+      newLoc.latitude -= newLat;
+      // store.location.latitude -= newLat;
+      this.moveMap(newLoc);
+      this.setState({
+        currentMarker: store.key,
+        showSearch: restFocus
+      });
+      this.forceUpdate(); // makes sure all the markers get updated
+    } else {
+      // if the store isn't updating the marker, it's trying to remove the search bar
+      this.setState({
+        showSearch: store
+      });
+    }
   }
 
   unfocus = () => {
@@ -50,22 +55,14 @@ export default class Map extends Component {
   };
 
   moveMap(loc) {
-    const newRegion = {
-      latitude: loc.latitude,
-      longitude: loc.longitude,
-      latitudeDelta: 0.0154,
-      longitudeDelta: 0.0069
-    };
-    this.map.animateToRegion(newRegion, 400);
+    // loc.latitudeDelta = 0.0154;
+    // loc.longitudeDelta = 0.0069;
+    this.map.animateToRegion(loc, 400);
   }
 
   centerMap = async () => {
     const location = await Location.getCurrentPositionAsync({});
-    const locationCoords = {
-      latitude: location.coords.latitude,
-      longitude: location.coords.longitude
-    };
-    this.moveMap(locationCoords);
+    this.moveMap(location.coords);
   };
 
   renderButton = action => {
@@ -102,7 +99,11 @@ export default class Map extends Component {
           showsCompass={false}
           zoomTapEnabled={false}
         >
-          {RenderMarkers(this.props.markers, this.state.currentMarker)}
+          {RenderMarkers(
+            this.props.markers,
+            this.state.currentMarker,
+            this.props.region
+          )}
         </MapView>
         <SearchBar
           showSearch={this.state.showSearch}

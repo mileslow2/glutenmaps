@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { View, TouchableOpacity, Text } from "react-native";
 import s from "../../Styles/RestaurantStyles";
 import u from "../../Styles/UniversalStyles";
-import StarRating from "react-native-star-rating";
+import RenderRating from "../Universal/StarRating";
 import Reviews from "../Review/Reviews";
 import Actions from "./Actions";
 export default class Restaurant extends Component {
@@ -13,21 +13,7 @@ export default class Restaurant extends Component {
           {this.props.data.name}
         </Text>
         <View style={[s.starContainer, u.abs, s.paddingLeft]}>
-          <StarRating
-            style={u.abs}
-            disabled={false}
-            emptyStar={"ios-star-outline"}
-            fullStar={"ios-star"}
-            halfStar={"ios-star-half"}
-            iconSet={"Ionicons"}
-            maxStars={5}
-            activeOpacity={0}
-            rating={this.props.data.rating}
-            fullStarColor={"rgb(83, 204, 151)"}
-            halfStarColor={"rgb(83, 204, 151)"}
-            emptyStarColor={"rgb(83, 204, 151)"}
-            starSize={s.star.height}
-          />
+          {RenderRating(this.props.data.rating, s.star.height)}
         </View>
         <Text style={[s.info, s.paddingLeft, s.textColor]}>
           Branch of a family-friendly chain offering pizzas, salads & wings,
