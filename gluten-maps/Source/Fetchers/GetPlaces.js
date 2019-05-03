@@ -18,6 +18,7 @@ function removeunnecessary(data) {
   return data;
 }
 export default async function GetPlaces(loc) {
+  return [];
   var returnValue;
   var googleMapRequest =
     "https://maps.googleapis.com/maps/api/place/textsearch/json?";

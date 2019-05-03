@@ -55,20 +55,21 @@ export default class Map extends Component {
   };
 
   moveMap(loc) {
-    // loc.latitudeDelta = 0.0154;
-    // loc.longitudeDelta = 0.0069;
+    loc.latitudeDelta = 0.0154;
+    loc.longitudeDelta = 0.0069;
     this.map.animateToRegion(loc, 400);
   }
 
-  centerMap = async () => {
+  async centerMap() {
     const location = await Location.getCurrentPositionAsync({});
+    console.log(location);
     this.moveMap(location.coords);
-  };
+  }
 
   renderButton = action => {
     return (
       <TouchableOpacity
-        onPress={() => {
+        onPress={async () => {
           this.centerMap();
         }}
         style={[s.button, u.abs, u.shadow, u.white]}
@@ -99,25 +100,25 @@ export default class Map extends Component {
           showsCompass={false}
           zoomTapEnabled={false}
         >
-          {RenderMarkers(
+          {/*{RenderMarkers(
             this.props.markers,
             this.state.currentMarker,
             this.props.region
-          )}
+          )}*/}
         </MapView>
         <SearchBar
           showSearch={this.state.showSearch}
           restaurants={this.props.markers}
         />
         {this.renderButton("center")}
-        <Focus
+        {/*<Focus
           restaurants={this.props.markers}
           loc={{
             lat: this.props.region.latitude,
             lon: this.props.region.longitude
           }}
           currentMarker={this.state.currentMarker}
-        />
+        />*/}
       </View>
     );
   }
