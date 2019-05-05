@@ -23,6 +23,7 @@ export default (s = StyleSheet.create({
     shadowRadius: 2,
     shadowOpacity: 1,
     shadowOffset: { height: 2 },
+    elevation: 5,
     bottom: 3
   },
   buttonText: {

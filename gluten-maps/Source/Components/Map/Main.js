@@ -31,11 +31,7 @@ export default class Main extends React.Component {
 
   render() {
     if (this.state.region == null) {
-      return (
-        <View style={{ backgroundColor: "red", flex: 1 }}>
-          <Text />
-        </View>
-      );
+      return <View style={{ backgroundColor: "red", flex: 1 }} />;
     }
     return (
       <SafeAreaView>

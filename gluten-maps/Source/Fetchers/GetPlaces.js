@@ -25,7 +25,7 @@ export default async function GetPlaces(loc) {
   googleMapRequest += makeParam("input", "gluten-free");
   googleMapRequest += makeParam("inputtype", "textquery");
   googleMapRequest += makeParam("location", loc.latitude + "," + loc.longitude);
-  googleMapRequest += makeParam("radius", "100");
+  googleMapRequest += makeParam("radius", "1");
   googleMapRequest += makeParam(
     "key",
     "AIzaSyBugHx4mjVMJEzGkpeEc5RNdOYfCBADaGY"

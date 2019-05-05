@@ -5,9 +5,9 @@ import { View, Animated, Image, TouchableOpacity } from "react-native";
 import { Store } from "../../Redux";
 
 export default class MarkerBody extends React.Component {
-  markerScale = new Animated.Value(0);
+  markerScale = new Animated.Value(1);
 
-  markerOffet = new Animated.Value(0);
+  markerOffet = new Animated.Value(1);
 
   animateOffset = toValue => {
     Animated.timing(this.markerOffet, {
@@ -48,7 +48,6 @@ export default class MarkerBody extends React.Component {
       this.animateMarker(1.6);
       this.animateOffset(-16);
     }
-
     return (
       <TouchableOpacity
         onPress={this.focusRestaurant}

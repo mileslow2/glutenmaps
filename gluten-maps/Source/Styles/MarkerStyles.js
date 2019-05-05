@@ -10,7 +10,8 @@ export default (s = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: "#fff",
     borderRadius: R(markerSize / 2),
-    bottom: R(markerSize / 2)
+    bottom: R(markerSize / 2),
+    elevation: 5
   },
   image: {
     width: R(markerSize / 1.16),
@@ -34,6 +35,7 @@ export default (s = StyleSheet.create({
     transform: [{ rotate: "180deg" }]
   },
   container: {
-    padding: R(markerSize / 1.45)
+    padding: R(markerSize / 1.45),
+    elevation: 5
   }
 }));

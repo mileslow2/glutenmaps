@@ -35,6 +35,7 @@ export default (s = StyleSheet.create({
     shadowRadius: 2,
     shadowOpacity: 1,
     shadowOffset: { height: 2 },
+    elevation: 5,
     right: f(1.13636),
     bottom: f(5)
   },

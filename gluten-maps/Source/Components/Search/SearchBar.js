@@ -15,7 +15,7 @@ import { Feather } from "@expo/vector-icons";
 import u from "../../Styles/UniversalStyles";
 import s from "../../Styles/SearchStyles";
 import { debounce } from "debounce";
-import Cover from "./Cover";
+import Cover from "../Universal/Cover";
 const { height, width } = Dimensions.get("screen");
 import R from "../Universal/Round";
 export default class SearchBar extends Component {
@@ -129,7 +129,7 @@ export default class SearchBar extends Component {
             }}
             onChangeText={debounce(text => {
               this.query(text);
-            }, 300)}
+            }, 600)}
             placeholder={"Search Restaurants"}
             style={s.text}
           />

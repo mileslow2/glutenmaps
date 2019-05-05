@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, TouchableOpacity } from "react-native";
+import { View, TouchableOpacity, Animated } from "react-native";
 import { MapView, Location } from "expo";
 import s from "../../Styles/MapStyles";
 import u from "../../Styles/UniversalStyles";
@@ -9,12 +9,14 @@ import SearchBar from "../Search/SearchBar";
 import { Store } from "../../Redux";
 import RenderMarkers from "./RenderMarkers";
 import cloneDeep from "clone-deep";
+import { debounce } from "debounce";
 const Marker = MapView.Marker;
-
+const emerald = "rgb(83, 204, 151)";
 export default class Map extends Component {
   state = {
     currentMarker: -1,
-    showSearch: true
+    showSearch: true,
+    active: true
   };
 
   componentWillMount() {
@@ -60,16 +62,19 @@ export default class Map extends Component {
     this.map.animateToRegion(loc, 400);
   }
 
+  componentWillReceiveProps(props) {
+    this.changeRegionState(props.region);
+  }
+
   async centerMap() {
     const location = await Location.getCurrentPositionAsync({});
-    console.log(location);
     this.moveMap(location.coords);
   }
 
-  renderButton = action => {
+  renderCenterButton = () => {
     return (
       <TouchableOpacity
-        onPress={async () => {
+        onPress={() => {
           this.centerMap();
         }}
         style={[s.button, u.abs, u.shadow, u.white]}
@@ -78,11 +83,15 @@ export default class Map extends Component {
           style={[u.centerH, u.centerV, s.icon]}
           name={"location-arrow"}
           size={40}
-          color={"rgb(83, 204, 151)"}
+          color={emerald}
         />
       </TouchableOpacity>
     );
   };
+
+  changeRegionState(region) {
+    this.setState({ region });
+  }
 
   render() {
     return (
@@ -100,25 +109,25 @@ export default class Map extends Component {
           showsCompass={false}
           zoomTapEnabled={false}
         >
-          {/*{RenderMarkers(
+          {RenderMarkers(
             this.props.markers,
             this.state.currentMarker,
-            this.props.region
-          )}*/}
+            this.state.region
+          )}
         </MapView>
         <SearchBar
           showSearch={this.state.showSearch}
           restaurants={this.props.markers}
         />
-        {this.renderButton("center")}
-        {/*<Focus
+        {this.renderCenterButton()}
+        <Focus
           restaurants={this.props.markers}
           loc={{
             lat: this.props.region.latitude,
             lon: this.props.region.longitude
           }}
           currentMarker={this.state.currentMarker}
-        />*/}
+        />
       </View>
     );
   }

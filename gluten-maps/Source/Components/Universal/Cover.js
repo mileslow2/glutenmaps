@@ -4,7 +4,7 @@ const { width, height } = Dimensions.get("screen");
 
 export default class Cover extends Component {
   render() {
-    if (this.props.icon == "#a0a0a0") return null;
+    if (this.props.icon == "#a0a0a0" || !this.props.render) return null;
     return (
       <View
         style={{
