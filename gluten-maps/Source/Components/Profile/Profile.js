@@ -1,13 +1,14 @@
 import React, { Component } from "react";
-import { Animated, View, Flatlist, TouchableOpacity, Text } from "react-native";
+import { Animated, View, TouchableOpacity, Text } from "react-native";
 import Cover from "../Universal/Cover";
 import Name from "./Name";
+import ProfileActions from "./ProfileActions";
 import s from "../../Styles/ProfileStyles";
 import u from "../../Styles/UniversalStyles";
 export default class Profile extends Component {
-  state = { render: true };
+  state = { render: false };
 
-  translateX = new Animated.Value(0);
+  translateX = new Animated.Value(-300);
 
   changeWidth(toValue) {
     Animated.timing(this.translateX, {
@@ -20,13 +21,13 @@ export default class Profile extends Component {
   componentWillReceiveProps(props) {
     const render = props.render;
     if (render) {
-      this.setState({ render });
       this.changeWidth(0);
+      this.setState({ render });
     } else {
-      this.changeWidth(-600);
+      this.changeWidth(-300);
       setTimeout(() => {
         this.setState({ render });
-      }, 200);
+      }, 300);
     }
   }
 
@@ -44,6 +45,7 @@ export default class Profile extends Component {
           ]}
         >
           {Name()}
+          {ProfileActions()}
         </Animated.View>
         <Cover render={this.state.render} />
       </View>

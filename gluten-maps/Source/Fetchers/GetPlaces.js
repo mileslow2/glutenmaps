@@ -30,7 +30,7 @@ export default async function GetPlaces(loc) {
     "key",
     "AIzaSyBugHx4mjVMJEzGkpeEc5RNdOYfCBADaGY"
   );
-  googleMapRequest = googleMapRequest.substr(0, googleMapRequest.length - 1); //removes the & from the end
+  googleMapRequest = googleMapRequest.slice(0, -1); //removes the & from the end
   try {
     await fetch(googleMapRequest)
       .then(res => res.json())

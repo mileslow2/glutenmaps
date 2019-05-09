@@ -4,6 +4,7 @@ const { width, height } = Dimensions.get("screen");
 function f(n) {
   return R(width / n);
 }
+const emerald = "rgb(83, 204, 151)";
 export default (s = StyleSheet.create({
   container: {
     height,
@@ -16,7 +17,7 @@ export default (s = StyleSheet.create({
     width: f(7),
     height: f(7),
     borderRadius: f(3.5),
-    backgroundColor: "rgb(83, 204, 151)"
+    backgroundColor: emerald
   },
   letter: {
     color: "white",
@@ -40,5 +41,16 @@ export default (s = StyleSheet.create({
   textContainer: {
     paddingLeft: 10,
     top: 2
+  },
+  shareText: {
+    color: emerald
+  },
+  actionText: {
+    fontSize: f(12),
+    fontWeight: "400",
+    paddingTop: 20
+  },
+  actionContainer: {
+    top: f(6)
   }
 }));

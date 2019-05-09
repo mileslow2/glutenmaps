@@ -53,17 +53,17 @@ export default class Action extends Component {
   keyExtractor = item => item.action;
 
   decideFunction = action => {
-    data = this.state.data;
+    const data = this.state.data;
     if (action == "Open") Linking.openURL(data.website);
     if (action == "Call") {
-      phone = data.formatted_phone_number;
+      var phone = data.formatted_phone_number;
       phone = phone.replace("-", "");
       phone = phone.replace("(", "");
       phone = phone.replace(") ", "");
       phonecall(phone, false);
     }
     if (action == "Directions") {
-      loc = data.geometry.location;
+      const loc = data.geometry.location;
       openMap({
         latitude: loc.lat,
         longitude: loc.lng,
