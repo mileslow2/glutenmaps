@@ -8,6 +8,6 @@ const HamburgerStyles = {
   borderRadius: 28,
   left: 20,
   paddingTop: 10,
-  paddingLeft: 11
+  paddingLeft: 12
 };
 export default HamburgerStyles;

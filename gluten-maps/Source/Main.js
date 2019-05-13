@@ -13,13 +13,13 @@ export default class Main extends Component {
   };
 
   render() {
-    const correctColor = this.state.profileToggled ? "grey" : emerald;
+    const correctColor = !this.state.profileToggled ? emerald : "grey";
     const renderMenu = (
       <View style={[HamburgerStyles, u.abs, u.shadow, u.white]}>
         <Animated.View style={{ transform: [{ scale: 1.5 }] }}>
           <Hamburger
             type={"spinCross"}
-            active={this.state.profileToggled}
+            active={!this.state.profileToggled}
             color={correctColor}
             onPress={() => {
               this.setState({ profileToggled: !this.state.profileToggled });

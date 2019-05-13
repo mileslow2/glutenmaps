@@ -1,0 +1,31 @@
+import { SecureStore } from "expo";
+var verified = false;
+var email;
+var password;
+var body;
+const url = "http://Miless-MacBook-Pro.local:2999/login";
+export default async function VerifyUser() {
+  email = await SecureStore.getItemAsync("email");
+  password = await SecureStore.getItemAsync("password");
+  hasCredentials = email != null && password != null;
+  if (hasCredentials) {
+    body = {
+      email,
+      password
+    };
+    body = JSON.stringify(body);
+    await fetch(url, {
+      method: "post",
+      body,
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+      .then(response => response.json())
+      .then(response => {
+        console.log(response);
+        verified = response;
+      });
+  }
+  return verified;
+}
