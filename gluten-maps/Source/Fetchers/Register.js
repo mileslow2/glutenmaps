@@ -6,7 +6,6 @@ export default async function Register(credentials) {
   body = cloneDeep(credentials);
   delete body.confirmedPassword;
   body = JSON.stringify(body);
-  console.log(body);
   await fetch(url, {
     method: "POST",
     body,

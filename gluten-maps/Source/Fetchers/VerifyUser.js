@@ -22,9 +22,10 @@ export default async function VerifyUser() {
       }
     })
       .then(response => response.json())
-      .then(response => {
-        console.log(response);
-        verified = response;
+      .then(async response => {
+        verified = response.verified;
+        if (response.verified)
+          await SecureStore.setItemAsync("id", response.id.toString());
       });
   }
   return verified;

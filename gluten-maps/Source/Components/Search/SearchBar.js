@@ -16,15 +16,37 @@ import u from "../../Styles/UniversalStyles";
 import s from "../../Styles/SearchStyles";
 import { debounce } from "debounce";
 import Cover from "../Universal/Cover";
-const { height, width } = Dimensions.get("screen");
+import NearbyList from "../Nearby/NearbyList";
+const { width } = Dimensions.get("screen");
 import R from "../Universal/Round";
 export default class SearchBar extends Component {
   state = {
     iconColor: "#a0a0a0",
     items: [],
+    displayedItems: [],
     blurred: true,
     searchWidth: R(width * 0.8)
   };
+
+  UNSAFE_componentWillReceiveProps(props) {
+    var items = [];
+    var current;
+    var newItem;
+    for (var i = 0; i < props.restaurants.length; i++) {
+      current = props.restaurants[i];
+      newItem = {
+        rating: current.rating,
+        name: current.name,
+        key: current.key,
+        uri: current.photos[0].photo_reference,
+        id: current.id
+      };
+      items.push(newItem);
+    }
+    this.setState({
+      items
+    });
+  }
 
   searchTop = new Animated.Value(16);
 
@@ -56,6 +78,20 @@ export default class SearchBar extends Component {
   changeSearchIconColor = iconColor => {
     this.setState({
       iconColor
+    });
+  };
+
+  query = text => {
+    text = text.toLowerCase();
+    const items = this.state.items;
+    var displayedItems = [];
+    var current;
+    for (var i = 0; i < items.length; i++) {
+      current = items[i].name.toLowerCase();
+      if (current.includes(text)) displayedItems.push(items[i]);
+    }
+    this.setState({
+      displayedItems
     });
   };
 
@@ -136,8 +172,14 @@ export default class SearchBar extends Component {
 
           {this.renderClose()}
         </Animated.View>
+        <View style={[u.abs, { zIndex: 3 }]}>
+          <NearbyList
+            loc={this.props.loc}
+            restaurants={this.state.displayedItems}
+          />
+        </View>
 
-        <Cover offset={-1 * halfW} icon={this.state.iconColor} />
+        <Cover offset={-1 * halfW} icon={this.state.iconColor} render={true} />
       </View>
     );
   }

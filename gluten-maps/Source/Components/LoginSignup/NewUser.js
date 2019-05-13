@@ -32,8 +32,6 @@ export default class NewUser extends Component {
   }
 
   async componentWillMount() {
-    await SecureStore.deleteItemAsync("email");
-    await SecureStore.deleteItemAsync("password");
     await this.verifyLogin();
   }
 

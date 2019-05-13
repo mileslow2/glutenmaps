@@ -39,5 +39,8 @@ export default (u = StyleSheet.create({
   },
   fieldContainer: {
     marginBottom: f(100)
+  },
+  editOffset: {
+    top: f(24)
   }
 }));

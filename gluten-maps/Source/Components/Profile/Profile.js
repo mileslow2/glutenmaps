@@ -45,7 +45,7 @@ export default class Profile extends Component {
           ]}
         >
           {Name()}
-          {ProfileActions()}
+          {ProfileActions(this.props.navigation)}
         </Animated.View>
         <Cover render={this.state.render} />
       </View>

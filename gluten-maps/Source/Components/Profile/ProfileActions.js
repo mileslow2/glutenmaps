@@ -1,12 +1,12 @@
 import React, { Component } from "react";
-import { View, TouchableOpacity, Text, FlatList, Share } from "react-native";
+import { TouchableOpacity, Text, FlatList, Share } from "react-native";
+import NavigationService from "../../../NavigationService";
+
 import s from "../../Styles/ProfileStyles";
 const actionNames = [
   { name: "Share" },
-  { name: "My reviews" },
   { name: "Edit account" },
-  { name: "Contact" },
-  { name: "More" }
+  { name: "More coming soon" }
 ];
 function share() {
   const content = {
@@ -17,11 +17,16 @@ function share() {
   Share.share(content);
 }
 
-function functionDecider(name) {
-  if (name === "Share") share();
+function editAccount() {
+  NavigationService.navigate("EditUser");
 }
 
-const keyExtractor = (item, index) => item.name;
+function functionDecider(name) {
+  if (name === "Share") share();
+  if (name === "Edit account") editAccount();
+}
+
+const keyExtractor = item => item.name;
 
 const renderAction = ({ item }) => {
   var textStyle = [s.actionText];

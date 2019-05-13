@@ -8,6 +8,10 @@ import HamburgerStyles from "./Styles/HamburgerStyles";
 const emerald = "rgb(83, 204, 151)";
 
 export default class Navigation extends Component {
+  static navigationOptions = {
+    header: null
+  };
+
   state = {
     profileToggled: false
   };
