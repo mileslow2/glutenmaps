@@ -15,7 +15,9 @@ import { debounce } from "debounce";
 import Decide, { nearbyAllowed } from "./Decider";
 import Nearby from "../Nearby/Nearby";
 import R from "../Universal/Round";
+import { HamburgerHandler } from "../../Redux";
 const { height } = Dimensions.get("screen");
+
 const nearbyHeight = R(height > 736 ? height * 0.9 : height * 0.95);
 const restaurantHeight = R(height > 736 ? height * 0.79 : height * 0.84);
 
@@ -59,17 +61,18 @@ export default class Focus extends Component {
     }).start();
   }
   renderFocus() {
+    var focusToggled = this.state.focusToggled;
+
     if (nearbyAllowed()) {
-      focusHeight = this.state.focusToggled ? 60 : nearbyHeight;
+      var focusHeight = focusToggled ? 60 : nearbyHeight;
       this.spring(focusHeight);
       this.changeToggle();
       Store.dispatch({ type: "update", payload: this.state.focusToggled });
-    } else if (!this.state.focusToggled) {
+    } else if (!focusToggled) {
       this.spring(restaurantHeight);
       this.changeToggle();
     } else {
       var store = Store.getState();
-      var newLocation = store.location;
       var payload = {
         location: store.location,
         key: -1
@@ -78,10 +81,17 @@ export default class Focus extends Component {
       this.changeToggle();
       this.spring(60);
     }
+    // var payload = false;
+    // if (focusToggled) payload = true;
   }
   changeToggle() {
+    var focusToggled = !this.state.focusToggled;
     this.setState({
-      focusToggled: !this.state.focusToggled
+      focusToggled
+    });
+    HamburgerHandler.dispatch({
+      type: "update",
+      payload: !focusToggled
     });
   }
   removeShadow() {
@@ -90,7 +100,8 @@ export default class Focus extends Component {
   }
   pagenearbyAllowed() {
     const data = {
-      correctHeight: nearbyHeight,
+      nearbyHeight,
+      restaurantHeight,
       restaurants: this.props.restaurants,
       loc: this.props.loc
     };

@@ -1,4 +1,6 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Dimensions } from "react-native";
+const { width, height } = Dimensions.get("screen");
+
 export default (s = StyleSheet.create({
   bar: {
     height: 54,
@@ -23,5 +25,10 @@ export default (s = StyleSheet.create({
   },
   cover: {
     backgroundColor: "rgba(156, 156, 156, 0.5)"
+  },
+  listContainer: {
+    zIndex: 20,
+    height: height,
+    top: height * 0.025
   }
 }));

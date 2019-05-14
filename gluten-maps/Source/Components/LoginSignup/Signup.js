@@ -41,7 +41,6 @@ export default class Signup extends Component {
         spaceAmount++;
       }
     }
-    console.log(spaceAmount);
     if (spaceAmount == 0 || spaceAmount > 1) return false;
     return true;
   }

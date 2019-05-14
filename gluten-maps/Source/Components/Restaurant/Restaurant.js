@@ -7,6 +7,7 @@ import Reviews from "../Review/Reviews";
 import Actions from "./Actions";
 export default class Restaurant extends Component {
   render() {
+    if (this.props.data == undefined) return null;
     return (
       <View>
         <Text style={[s.paddingLeft, s.textColor, s.largeText, s.title]}>

@@ -30,15 +30,15 @@ export default class Map extends Component {
   operateMap(store) {
     if (typeof store == "object") {
       //if store is updating marker
-      const restFocus = store.key == -1;
-      const newLat = restFocus ? 0.0043 : 0.0057;
+      const showSearch = store.key == -1;
+      const newLat = showSearch ? 0.0043 : 0.0057;
       var newLoc = store.location;
       newLoc.latitude -= newLat;
       // store.location.latitude -= newLat;
       this.moveMap(newLoc);
       this.setState({
         currentMarker: store.key,
-        showSearch: restFocus
+        showSearch
       });
       this.forceUpdate(); // makes sure all the markers get updated
     } else {

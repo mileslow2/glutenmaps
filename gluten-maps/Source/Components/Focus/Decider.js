@@ -1,12 +1,19 @@
 import React, { Component } from "react";
 import { View } from "react-native";
-import { Store } from "../../Redux";
+import { Store, FromSearch } from "../../Redux";
 import Nearby from "../Nearby/Nearby";
 import Restaurant from "../Restaurant/Restaurant";
-
+var store, returnValue;
 export function nearbyAllowed() {
-  const store = Store.getState();
-  return store == undefined || typeof store == "boolean" || store.key == -1;
+  store = Store.getState();
+  returnValue =
+    store == undefined || typeof store == "boolean" || store.key == -1;
+  if (FromSearch.getState()) {
+    returnValue = false;
+    FromSearch.dispatch({ type: "update", payload: false });
+  }
+
+  return returnValue;
 }
 
 export default class Decide extends Component {
@@ -14,7 +21,7 @@ export default class Decide extends Component {
     const data = this.props.data;
     if (nearbyAllowed()) {
       return (
-        <View style={{ height: data.correctHeight }}>
+        <View style={{ height: data.nearbyHeight }}>
           <Nearby
             render={this.props.render}
             restaurants={data.restaurants}
@@ -26,6 +33,10 @@ export default class Decide extends Component {
       );
     }
     const store = Store.getState();
-    return <Restaurant data={data.restaurants[store.key]} />;
+    return (
+      <View style={{ height: data.restaurantHeight }}>
+        <Restaurant data={data.restaurants[store.key]} />
+      </View>
+    );
   }
 }

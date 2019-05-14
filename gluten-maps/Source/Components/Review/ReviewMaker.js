@@ -17,7 +17,6 @@ export default class ReviewMaker extends Component {
   };
 
   componentWillReceiveProps(props) {
-    console.log("hello");
     this.setState({
       visible: props.visible
     });

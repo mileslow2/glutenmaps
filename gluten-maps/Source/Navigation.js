@@ -4,7 +4,9 @@ import { View, Animated } from "react-native";
 import Main from "./Components/Map/Main";
 import Profile from "./Components/Profile/Profile";
 import u from "./Styles/UniversalStyles";
+import { HamburgerHandler } from "./Redux";
 import HamburgerStyles from "./Styles/HamburgerStyles";
+import { debounce } from "debounce";
 const emerald = "rgb(83, 204, 151)";
 
 export default class Navigation extends Component {
@@ -13,12 +15,31 @@ export default class Navigation extends Component {
   };
 
   state = {
-    profileToggled: false
+    profileToggled: false,
+    renderBurger: true
   };
+
+  componentWillMount() {
+    var renderBurger;
+    this.unsubscribe = HamburgerHandler.subscribe(
+      debounce(() => {
+        renderBurger = HamburgerHandler.getState();
+        console.log(renderBurger);
+
+        this.setState({
+          renderBurger
+        });
+      }, 700)
+    );
+  }
+
+  componentWillUnmount() {
+    this.unsubscribe();
+  }
 
   render() {
     const correctColor = this.state.profileToggled ? "grey" : emerald;
-    const renderMenu = (
+    const renderMenu = this.state.renderBurger ? (
       <View style={[HamburgerStyles, u.abs, u.shadow, u.white]}>
         <Animated.View style={{ transform: [{ scale: 1.5 }] }}>
           <Hamburger
@@ -31,7 +52,7 @@ export default class Navigation extends Component {
           />
         </Animated.View>
       </View>
-    );
+    ) : null;
     return (
       <View>
         <Main />

@@ -50,7 +50,9 @@ export default class MarkerBody extends React.Component {
     }
     return (
       <TouchableOpacity
-        onPress={this.focusRestaurant}
+        onPress={() => {
+          this.focusRestaurant();
+        }}
         activeOpacity={1}
         style={s.container}
       >

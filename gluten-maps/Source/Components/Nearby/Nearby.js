@@ -22,7 +22,11 @@ export default class Nearby extends Component {
       <View style={{ height: this.props.correctHeight }}>
         <Text style={s.text}>Nearby Restaurants</Text>
         {renderFilter}
-        <NearbyList loc={this.props.loc} restaurants={this.props.restaurants} />
+        <NearbyList
+          loc={this.props.loc}
+          restaurants={this.props.restaurants}
+          fromSearch={false}
+        />
       </View>
     );
   }

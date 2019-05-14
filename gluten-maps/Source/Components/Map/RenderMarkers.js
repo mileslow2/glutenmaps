@@ -1,13 +1,15 @@
 import React, { Component } from "react";
 import { MapView } from "expo";
-import { View } from "react-native";
 import MarkerBody from "./Marker";
 import GetImage from "../../Fetchers/GetImage";
-import abs from "../Universal/Abs";
 const Marker = MapView.Marker;
 
 export default function RenderMarkers(markers, currentMarker, region) {
+  if (markers == undefined) return null;
+  //it gets mad when it's undefined
+
   return markers.map(marker => (
+    
     <Marker
       coordinate={{
         latitude: marker.geometry.location.lat,
@@ -22,9 +24,7 @@ export default function RenderMarkers(markers, currentMarker, region) {
           latitude: marker.geometry.location.lat,
           longitude: marker.geometry.location.lng
         }}
-        regionLat={region.latitude}
-        regionLatDel={region.latitudeDelta}
-        imageURI={GetImage(marker.photos[0].photo_reference, marker.key)}
+        imageURI={GetImage(marker.photos[0].photo_reference)}
       />
     </Marker>
   ));

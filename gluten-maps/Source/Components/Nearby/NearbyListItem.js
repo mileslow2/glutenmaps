@@ -1,10 +1,11 @@
-import React from "react";
+import React, { Component } from "react";
 import { View, Text, Image, TouchableOpacity } from "react-native";
 import RenderRating from "../Universal/StarRating";
 import GetImage from "../../Fetchers/GetImage";
+import u from "../../Styles/UniversalStyles";
 import s from "../../Styles/NearbyStyles";
-import { Store, FocusChange } from "../../Redux";
-export default class NearbyListItem extends React.PureComponent {
+import { Store, FocusChange, FromSearch } from "../../Redux";
+export default class NearbyListItem extends Component {
   goToRestaurant = () => {
     const payload = {
       location: {
@@ -13,6 +14,7 @@ export default class NearbyListItem extends React.PureComponent {
       },
       key: this.props.item.key
     };
+    FromSearch.dispatch({ type: "update", payload: this.props.fromSearch });
     FocusChange.dispatch({ type: "update", payload: true });
     Store.dispatch({ type: "update", payload });
   };

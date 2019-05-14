@@ -8,8 +8,7 @@ import {
   TouchableOpacity,
   Dimensions,
   Animated,
-  SafeAreaView,
-  Text
+  Keyboard
 } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import u from "../../Styles/UniversalStyles";
@@ -17,35 +16,49 @@ import s from "../../Styles/SearchStyles";
 import { debounce } from "debounce";
 import Cover from "../Universal/Cover";
 import NearbyList from "../Nearby/NearbyList";
-const { width } = Dimensions.get("screen");
+import { HamburgerHandler, Store, FocusChange } from "../../Redux";
+const { width, height } = Dimensions.get("screen");
 import R from "../Universal/Round";
+
+const halfW = R(width * 0.5);
+
 export default class SearchBar extends Component {
   state = {
     iconColor: "#a0a0a0",
     items: [],
     displayedItems: [],
     blurred: true,
-    searchWidth: R(width * 0.8)
+    searchWidth: R(width * 0.8),
+    keyboardOpen: false
   };
 
-  UNSAFE_componentWillReceiveProps(props) {
-    var items = [];
-    var current;
-    var newItem;
-    for (var i = 0; i < props.restaurants.length; i++) {
-      current = props.restaurants[i];
-      newItem = {
-        rating: current.rating,
-        name: current.name,
-        key: current.key,
-        uri: current.photos[0].photo_reference,
-        id: current.id
-      };
-      items.push(newItem);
-    }
+  toggleShow = () => {
     this.setState({
-      items
+      keyboardOpen: true
     });
+  };
+
+  toggleHide = () => {
+    this.setState({
+      keyboardOpen: false
+    });
+  };
+
+  componentDidMount() {
+    this.keyboardDidShowListener = Keyboard.addListener(
+      "keyboardDidShow",
+      this.toggleHide
+    );
+    this.keyboardDidHideListener = Keyboard.addListener(
+      "keyboardDidHide",
+      this.toggleShow
+    );
+  }
+
+  componentWillUnmount() {
+    this.unsubscribe();
+    this.keyboardDidShowListener.remove();
+    this.keyboardDidHideListener.remove();
   }
 
   searchTop = new Animated.Value(16);
@@ -59,6 +72,7 @@ export default class SearchBar extends Component {
   };
 
   focus = () => {
+    HamburgerHandler.dispatch({ type: "update", payload: false });
     this.changeSearchIconColor("rgb(83, 204, 151)");
     this.setState({
       blurred: false,
@@ -67,10 +81,13 @@ export default class SearchBar extends Component {
   };
 
   blur = () => {
+    HamburgerHandler.dispatch({ type: "update", payload: true });
     this.setState({
       blurred: true,
-      searchWidth: R(width * 0.8)
+      searchWidth: R(width * 0.8),
+      displayedItems: this.state.items
     });
+    this.input.clear();
     this.changeSearchIconColor("#a0a0a0");
     this.input.blur();
   };
@@ -124,13 +141,28 @@ export default class SearchBar extends Component {
   componentWillReceiveProps(props) {
     if (!props.showSearch) {
       this.changeSearchTop(-70);
-    } else {
-      this.changeSearchTop(16);
-    }
+      this.blur();
+    } else this.changeSearchTop(16);
+    var items = props.restaurants;
+    this.setState({
+      items,
+      displayedItems: items
+    });
   }
 
   render() {
-    const halfW = R(width * 0.5);
+    const listHeight = !this.state.keyboardOpen ? height / 2 : height * 0.89;
+    const list = this.state.blurred ? null : (
+      <View style={[u.fullW, u.abs, s.listContainer]}>
+        <View style={[u.abs, u.fullW, { top: 40, height: listHeight }]}>
+          <NearbyList
+            fromSearch={true}
+            loc={this.props.loc}
+            restaurants={this.state.displayedItems}
+          />
+        </View>
+      </View>
+    );
     return (
       <View style={[u.abs, { zIndex: 2, left: halfW }]}>
         <Animated.View
@@ -169,15 +201,9 @@ export default class SearchBar extends Component {
             placeholder={"Search Restaurants"}
             style={s.text}
           />
-
+          {list}
           {this.renderClose()}
         </Animated.View>
-        <View style={[u.abs, { zIndex: 3 }]}>
-          <NearbyList
-            loc={this.props.loc}
-            restaurants={this.state.displayedItems}
-          />
-        </View>
 
         <Cover offset={-1 * halfW} icon={this.state.iconColor} render={true} />
       </View>

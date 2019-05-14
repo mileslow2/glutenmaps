@@ -13,3 +13,7 @@ const reducer = function(state, action) {
 export const Store = createStore(reducer, initialState);
 
 export const FocusChange = createStore(reducer, false);
+
+export const HamburgerHandler = createStore(reducer, true);
+
+export const FromSearch = createStore(reducer, false);
