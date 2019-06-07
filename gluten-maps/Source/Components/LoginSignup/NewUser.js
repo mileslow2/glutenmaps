@@ -54,7 +54,7 @@ export default class NewUser extends Component {
     if (credentialsEntered) {
       await SecureStore.setItemAsync("email", email);
       await SecureStore.setItemAsync("password", password);
-      this.verifyLogin();
+      this.navigate("Navigation");
     }
   };
 

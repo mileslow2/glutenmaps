@@ -2,7 +2,7 @@ import React from "react";
 import { View, Text } from "react-native";
 import s from "../../Styles/ProfileStyles";
 import u from "../../Styles/UniversalStyles";
-const name = "Miles Low";
+const name = "Your Name";
 export default function Name() {
   return (
     <View style={[u.row, s.nameContainer]}>

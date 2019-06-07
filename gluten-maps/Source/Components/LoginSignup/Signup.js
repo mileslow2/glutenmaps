@@ -84,7 +84,7 @@ export default class Signup extends Component {
     if (!credentialsFull) alertMessage = "You must fill in all the forms";
     const valid = passwordsEqual && credentialsFull && onlyTwoNames;
     if (valid) {
-      const registered = await Register(this.state);
+      this.navigate("Navigation");
       if (registered) this.navigate("Navigation");
       else Alert.alert("That email was already taken.");
     } else Alert.alert(alertMessage);

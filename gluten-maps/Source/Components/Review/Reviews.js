@@ -8,10 +8,10 @@ const reviews = [
     name: "Miles Low",
     rating: 4,
     review:
-      "Fresh Brothers pizza they had just opened their third location. At the time the sauce was very good the cheese was excellent and the crust was very acceptable. In the many years since they have . . ."
+      "This is an example review, we haven't enable the review section yet."
   },
   {
-    name: "Miles Low2",
+    name: "Alex Solomon",
     rating: 4,
     review:
       "Fresh Brothers pizza they had just opened their third location. At the time the sauce was very good the cheese was excellent and the crust was very acceptable. In the many years since they have . . ."

@@ -25,12 +25,6 @@ const MainContainer = createAppContainer(MainNav);
 
 export default class App extends Component {
   render() {
-    return (
-      <MainContainer
-        ref={navigatorRef => {
-          NavigationService.setTopLevelNavigator(navigatorRef);
-        }}
-      />
-    );
+    return <MainContainer />;
   }
 }

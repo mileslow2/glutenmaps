@@ -24,12 +24,10 @@ export default class Navigation extends Component {
     this.unsubscribe = HamburgerHandler.subscribe(
       debounce(() => {
         renderBurger = HamburgerHandler.getState();
-        console.log(renderBurger);
-
         this.setState({
           renderBurger
         });
-      }, 700)
+      }, 1000)
     );
   }
 

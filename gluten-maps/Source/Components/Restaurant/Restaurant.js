@@ -17,8 +17,7 @@ export default class Restaurant extends Component {
           {RenderRating(this.props.data.rating, s.star.height)}
         </View>
         <Text style={[s.info, s.paddingLeft, s.textColor]}>
-          Branch of a family-friendly chain offering pizzas, salads & wings,
-          plus a gluten-free menu.
+          We haven't been able to enable the reviews to be working yet
         </Text>
         <View style={[s.smallerScreenSpacer, u.fullW]} />
         <Reviews />
