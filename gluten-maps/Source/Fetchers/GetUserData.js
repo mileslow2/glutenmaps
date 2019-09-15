@@ -1,8 +1,8 @@
 import { SecureStore } from "expo";
-const url = "http://Miless-MacBook-Pro.local:2999/userData";
+const url = "http://Miless-MacBook-Pro.local:8081/getUserInfo";
 var body;
 var id;
-var user = "hello";
+var user;
 export default async function GetUserData() {
   id = await SecureStore.getItemAsync("id");
   body = { id };

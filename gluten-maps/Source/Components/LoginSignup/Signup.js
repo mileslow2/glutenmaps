@@ -7,23 +7,22 @@ import {
   Button,
   Alert
 } from "react-native";
-import { SecureStore } from "expo";
 import Register from "../../Fetchers/Register";
 import u from "../../Styles/UniversalStyles";
 import s from "./NewUserStyles";
 
 export default class Signup extends Component {
   state = {
-    email: "",
-    password: "",
-    fullName: "",
-    confirmedPassword: ""
+    email: "mileslow4@gmail.com",
+    password: "123",
+    fullName: "minger tinger",
+    confirmedPassword: "123"
   };
 
   credentialsFull() {
     const credentials = this.state;
     const arr = Object.values(credentials);
-    for (i of arr) if (i === "") return false;
+    for (i of arr) if (i === " ") return false;
     return true;
   }
 
@@ -36,11 +35,8 @@ export default class Signup extends Component {
   onlyTwoNames() {
     const fullName = this.state.fullName;
     var spaceAmount = 0;
-    for (var i = 0; i < fullName.length; i++) {
-      if (fullName[i] === " ") {
-        spaceAmount++;
-      }
-    }
+    for (var i = 0; i < fullName.length; i++)
+      if (fullName[i] === " ") spaceAmount++;
     if (spaceAmount == 0 || spaceAmount > 1) return false;
     return true;
   }
@@ -84,7 +80,7 @@ export default class Signup extends Component {
     if (!credentialsFull) alertMessage = "You must fill in all the forms";
     const valid = passwordsEqual && credentialsFull && onlyTwoNames;
     if (valid) {
-      this.navigate("Navigation");
+      const registered = Register(this.state);
       if (registered) this.navigate("Navigation");
       else Alert.alert("That email was already taken.");
     } else Alert.alert(alertMessage);

@@ -19,7 +19,7 @@ export default (u = StyleSheet.create({
     fontWeight: "600"
   },
   fieldHeader: {
-    fontSize: f(40),
+    fontSize: f(35),
     fontWeight: "500",
     color: emerald,
     left: f(400),
@@ -29,7 +29,8 @@ export default (u = StyleSheet.create({
     width: f(3),
     height: f(16),
     borderRadius: f(66),
-    padding: 10
+    padding: 10,
+    fontSize: f(45)
   },
   offset: {
     top: f(3.8)

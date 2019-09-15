@@ -54,7 +54,9 @@ export default class NewUser extends Component {
     if (credentialsEntered) {
       await SecureStore.setItemAsync("email", email);
       await SecureStore.setItemAsync("password", password);
-      this.navigate("Navigation");
+      const verified = await VerifyUser();
+      if (verified) this.navigate("Navigation");
+      else Alert.alert("Your username or password is incorrect");
     }
   };
 

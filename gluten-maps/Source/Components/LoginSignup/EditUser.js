@@ -1,12 +1,5 @@
 import React, { Component } from "react";
-import {
-  View,
-  TouchableOpacity,
-  Text,
-  TextInput,
-  Button,
-  Alert
-} from "react-native";
+import { View, TouchableOpacity, Text, TextInput, Alert } from "react-native";
 import GetUserData from "../../Fetchers/GetUserData";
 import ModifyUser from "../../Fetchers/ModifyUser";
 import u from "../../Styles/UniversalStyles";

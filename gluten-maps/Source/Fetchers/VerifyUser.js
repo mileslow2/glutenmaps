@@ -1,9 +1,7 @@
 import { SecureStore } from "expo";
 var verified = false;
-var email;
-var password;
-var body;
-const url = "http://Miless-MacBook-Pro.local:2999/login";
+var email, password, body;
+const url = "http://Miless-MacBook-Pro.local:8081/login";
 export default async function VerifyUser() {
   email = await SecureStore.getItemAsync("email");
   password = await SecureStore.getItemAsync("password");

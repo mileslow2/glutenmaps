@@ -1,5 +1,5 @@
 import cloneDeep from "clone-deep";
-const url = "http://Miless-MacBook-Pro.local:2999/register";
+const url = "http://Miless-MacBook-Pro.local:8081/register";
 var registered;
 var body;
 export default async function Register(credentials) {

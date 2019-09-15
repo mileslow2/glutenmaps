@@ -4,6 +4,7 @@ export default async function GetDistance(loc, markers) {
   var newDist;
   var returnVal = markers;
   for (var i = 0; i < markers.length; i++) {
+    return [];
     dest = markers[i].geometry.location;
     var googleMapRequest =
       "https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=" +
@@ -28,5 +29,6 @@ export default async function GetDistance(loc, markers) {
       console.error(error);
     }
   }
+
   return returnVal;
 }
