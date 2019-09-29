@@ -1,25 +1,25 @@
 {
-  "expo": {
-    "name": "glutenmaps",
-    "slug": "gluten-maps",
-    "privacy": "public",
-    "sdkVersion": "32.0.0",
-    "platforms": ["ios"],
-    "version": "1.0.0",
-    "orientation": "portrait",
-    "icon": "./assets/icon.png",
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
-    "updates": {
-      "fallbackToCacheTimeout": 0
-    },
-    "assetBundlePatterns": ["**/*"],
-    "ios": {
-      "supportsTablet": true,
-      "bundleIdentifier": "com.glutenCo.GlutenMaps"
-    }
-  }
+	"expo": {
+		"name": "glutenmaps",
+		"slug": "gluten-maps",
+		"privacy": "public",
+		"sdkVersion": "35.0.0",
+		"platforms": ["ios"],
+		"version": "1.0.0",
+		"orientation": "portrait",
+		"icon": "./assets/icon.png",
+		"splash": {
+			"image": "./assets/splash.png",
+			"resizeMode": "contain",
+			"backgroundColor": "#ffffff"
+		},
+		"updates": {
+			"fallbackToCacheTimeout": 0
+		},
+		"assetBundlePatterns": ["**/*"],
+		"ios": {
+			"supportsTablet": true,
+			"bundleIdentifier": "com.glutenCo.GlutenMaps"
+		}
+	}
 }
