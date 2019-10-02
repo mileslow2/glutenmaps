@@ -3,6 +3,7 @@ import React,
     Component
 }
 from "react";
+import { createStackNavigator } from 'react-navigation-stack'
 import Navigation from "./Source/Navigation";
 import NewUser from "./Source/Components/LoginSignup/NewUser";
 import Signup from "./Source/Components/LoginSignup/Signup";
@@ -12,7 +13,6 @@ import
 {
     createSwitchNavigator,
     createAppContainer,
-    createStackNavigator
 }
 from "react-navigation";
 
